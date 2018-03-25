@@ -1,7 +1,13 @@
 {% extends "base.html" %}
-{% import 'bootstrap/wtf.html' as wtf %}
-<h1>Hello there!</h1>
 {% block app_content %}
+    <div class="row" style="display:flex;  flex-wrap: wrap;">
+        <div class="col-xs-2"><strong>Project ID</strong></div>
+        <div class="col-xs-2"><strong>Project Name</strong></div>
+        <div class="col-xs-2"><strong>PMT</strong></div>
+        <div class="col-xs-2"><strong>Dev Lead</strong></div>
+        <div class="col-xs-2"><strong>Developers</strong></div>
+        <div class="col-xs-2"><strong>ID</strong></div>
+    </div>
     {% for project in all_projects %}
         {% include '_project.html' %}
     {% endfor %}

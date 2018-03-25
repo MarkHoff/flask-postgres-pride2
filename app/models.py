@@ -91,6 +91,7 @@ class Project(db.Model):
     pmt = db.Column(db.String(10))
     dev_lead = db.Column(db.String(10))
     developers = db.Column(db.String(30))
+    release = db.Column(db.String(10))
     sprint_schedule = db.Column(db.String(100))
     lpm = db.Column(db.String(100))
     pm = db.Column(db.String(100))
@@ -105,6 +106,28 @@ class Project(db.Model):
 
     def __repr__(self):
         return '<Project {}>'.format(self.body)
+
+
+class DbObject(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    dm_seq = db.Column(db.String(40))
+    data_type = db.Column(db.String(40))
+    schema = db.Column(db.String(40))
+    db_object = db.Column(db.String(100))
+    frequency = db.Column(db.String(40))
+    data_provider = db.Column(db.String(40))
+    providing_system = db.Column(db.String(100))
+    interface = db.Column(db.String(100))
+    topic = db.Column(db.String(100))
+    data_retention = db.Column(db.String(100))
+    latency = db.Column(db.String(100))
+    data_in_qa0 = db.Column(db.String(10))
+    row_count_per_period = db.Column(db.String(100))
+    active_in_prod = db.Column(db.String(100))
+    order_by = db.Column(db.String(100))
+    segment_by = db.Column(db.String(100))
+    special_notes = db.Column(db.String(100))
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
 
 
 

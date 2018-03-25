@@ -1,9 +1,10 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, ProjectForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, \
+    ResetPasswordForm, ProjectForm, EditProjectForm, DbObjectForm, EditDbObjectForm
 from app.email import send_password_reset_email
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Post, Project
+from app.models import User, Post, Project, DbObject
 from werkzeug.urls import url_parse
 from datetime import datetime
 
@@ -19,23 +20,7 @@ def before_request():
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    form = PostForm()
-    if form.validate_on_submit():
-        post = Post(body=form.post.data, author=current_user)
-        db.session.add(post)
-        db.session.commit()
-        flash('Your post is now live!')
-        return redirect(url_for('index'))
-    page = request.args.get('page', 1, type=int)
-    posts = current_user.followed_posts().paginate(
-        page, app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('index', page=posts.next_num) \
-        if posts.has_next else None
-    prev_url = url_for('index', page=posts.prev_num) \
-        if posts.has_prev else None
-    return render_template('index.html', title='Home', form=form,
-                           posts=posts.items, next_url=next_url,
-                           prev_url=prev_url)
+    return render_template('index.html', title='Home')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -102,39 +87,6 @@ def edit_profile():
     return render_template('edit_profile.html', title='Edit Profile',
                            form=form)
 
-
-@app.route('/follow/<username>')
-@login_required
-def follow(username):
-    user = User.query.filter_by(username=username).first()
-    if user is None:
-        flash('User {} not found.'.format(username))
-        return redirect(url_for('index'))
-    if user == current_user:
-        flash('You cannot follow yourself!')
-        return redirect(url_for('user', username=username))
-    current_user.follow(user)
-    db.session.commit()
-    flash('You are following {}!'.format(username))
-    return redirect(url_for('user', username=username))
-
-
-@app.route('/unfollow/<username>')
-@login_required
-def unfollow(username):
-    user = User.query.filter_by(username=username).first()
-    if user is None:
-        flash('User {} not found.'.format(username))
-        return redirect(url_for('index'))
-    if user == current_user:
-        flash('You cannot unfollow yourself!')
-        return redirect(url_for('user', username=username))
-    current_user.unfollow(user)
-    db.session.commit()
-    flash('You are not following {}.'.format(username))
-    return redirect(url_for('user', username=username))
-
-
 @app.route('/explore')
 @login_required
 def explore():
@@ -189,6 +141,7 @@ def projects():
                           pmt = form.pmt.data,
                           dev_lead = form.dev_lead.data,
                           developers = form.developers.data,
+                          release = form.release.data,
                           sprint_schedule = form.sprint_schedule.data,
                           lpm = form.lpm.data,
                           pm = form.pm.data,
@@ -200,7 +153,7 @@ def projects():
         db.session.commit()
         flash('Your project has been posted!')
         return redirect(url_for('view_projects'))
-    # all_proj = Project.all_projects()
+    all_proj = Project.query.all()
     # page = request.args.get('page', 1, type=int)
     # posts = current_user.followed_posts().paginate(
     #     page, app.config['POSTS_PER_PAGE'], False)
@@ -210,9 +163,85 @@ def projects():
     #     if posts.has_prev else None
     return render_template('project.html', title='Projects', form=form)
 
+
 @app.route('/view_projects', methods=['GET'])
 def view_projects():
-    return render_template('view_projects.html', title='View Projects', all_projects=Project.query.all())
+    all_proj = Project.query.all()
+    return render_template('view_projects.html', title='View Projects', all_projects=all_proj)
+
+
+@app.route('/project_detail/<id>')
+def project_detail(id):
+    proj_detail = Project.query.filter_by(id=id).first_or_404()
+    return render_template('view_project_detail.html',
+                           title='Project Detail',
+                           project_detail=proj_detail
+                           )
+
+
+@app.route('/edit_project/<id>', methods=['GET', 'POST'])
+def edit_project(id):
+    proj_id = Project.query.get(id)
+    form = EditProjectForm(formdata=request.form, obj=proj_id)
+    if form.validate_on_submit():
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('view_projects'))
+    elif request.method == 'GET':
+            return render_template('edit_project_detail.html',
+                            title='Edit Project',
+                            form=form)
+
+
+@app.route('/view_objects', methods=['GET'])
+def view_objects():
+    all_obj = DbObject.query.all()
+    return render_template('view_objects.html', title='View Objects', all_objects=all_obj)
+
+
+@app.route('/add_objects', methods=['GET', 'POST'])
+def objects():
+    form = DbObjectForm()
+    if form.validate_on_submit():
+        dbobject = DbObject(
+          dm_seq=form.dm_seq.data,
+          data_type = form.data_type.data,
+          schema = form.schema.data,
+          db_object = form.db_object.data,
+          frequency = form.frequency.data,
+          data_provider = form.data_provider.data,
+          providing_system = form.providing_system.data,
+          interface = form.interface.data,
+          topic = form.topic.data,
+          data_retention = form.data_retention.data,
+          latency = form.latency.data,
+          data_in_qa0 = form.data_in_qa0.data,
+          row_count_per_period = form.row_count_per_period.data,
+          active_in_prod = form.active_in_prod.data,
+          order_by = form.order_by.data,
+          segment_by = form.segment_by.data,
+          special_notes = form.special_notes.data
+                          )
+        db.session.add(dbobject)
+        db.session.commit()
+        flash('Your object has been posted!')
+        return redirect(url_for('view_objects'))
+    return render_template('add_object.html', title='Add DB Objects', form=form)
+
+
+@app.route('/edit_object/<id>', methods=['GET', 'POST'])
+def edit_object(id):
+    obj_id = DbObject.query.get(id)
+    form = EditDbObjectForm(formdata=request.form, obj=obj_id)
+    if form.validate_on_submit():
+        form.populate_obj(obj_id)
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('view_objects'))
+    elif request.method == 'GET':
+            return render_template('edit_object_detail.html',
+                            title='Edit Object',
+                            form=form)
 
 @app.route('/logout')
 def logout():
