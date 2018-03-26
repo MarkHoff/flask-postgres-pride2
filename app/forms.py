@@ -103,6 +103,7 @@ class DbObjectForm(FlaskForm):
     active_in_prod = StringField('Active In Prod', validators=[Length(min=1, max=140)])
     order_by = StringField('Order By', validators=[Length(min=1, max=140)])
     segment_by = StringField('Segment By', validators=[Length(min=1, max=140)])
+    project_id = StringField('Project ID', validators=[Length(min=1, max=140)])
     special_notes = TextAreaField('Special Notes', validators=[Length(min=1, max=1400)])
     submit = SubmitField('Submit')
 
@@ -124,6 +125,7 @@ class EditDbObjectForm(FlaskForm):
     active_in_prod = StringField('Active In Prod', validators=[Length(min=1, max=140)])
     order_by = StringField('Order By', validators=[Length(min=1, max=140)])
     segment_by = StringField('Segment By', validators=[Length(min=1, max=140)])
+    project_id = StringField('Project ID', validators=[Length(min=1, max=140)])
     special_notes = TextAreaField('Special Notes', validators=[Length(min=1, max=1400)])
     submit = SubmitField('Submit')
 

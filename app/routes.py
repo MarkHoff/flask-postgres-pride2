@@ -8,6 +8,11 @@ from app.models import User, Post, Project, DbObject
 from werkzeug.urls import url_parse
 from datetime import datetime
 
+from sqlalchemy.orm import relationship, backref
+from sqlalchemy import Table, Column, Integer, ForeignKey, and_
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import session
+
 
 @app.before_request
 def before_request():
@@ -240,8 +245,41 @@ def edit_object(id):
         return redirect(url_for('view_objects'))
     elif request.method == 'GET':
             return render_template('edit_object_detail.html',
-                            title='Edit Object',
-                            form=form)
+                                    title='Edit Object',
+                                    form=form)
+
+
+@app.route('/object_detail/<id>')
+def object_detail(id):
+    obj_detail = db.session.query(DbObject).outerjoin(Project, and_(Project.pid == DbObject.project_id)).add_columns(
+        DbObject.db_object,
+        Project.project_name,
+        Project.pid,
+        Project.dev_lead,
+        Project.developers,
+        Project.release,
+        DbObject.dm_seq,
+        DbObject.data_in_qa0,
+        DbObject.data_type,
+        DbObject.schema,
+        DbObject.frequency,
+        DbObject.data_provider,
+        DbObject.providing_system,
+        DbObject.interface,
+        DbObject.topic,
+        DbObject.data_retention,
+        DbObject.latency,
+        DbObject.row_count_per_period,
+        DbObject.active_in_prod,
+        DbObject.order_by,
+        DbObject.segment_by,
+        DbObject.special_notes
+    ).filter_by(id=id).first_or_404()
+    return render_template('view_object_detail.html',
+                           title='Object Detail',
+                           object_detail=obj_detail
+                           )
+
 
 @app.route('/logout')
 def logout():
