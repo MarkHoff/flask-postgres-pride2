@@ -1,5 +1,5 @@
 <div class="row" style="display:flex; flex-wrap: wrap">
-    <div class="col-xs-2">{{ object.dm_seq }}</div>
+    <div class="col-xs-2"><a href="{{ url_for('object_detail', id=object.id) }}">{{ object.dm_seq }}</a></div>
     <div class="col-xs-2">{{ object.schema }}</div>
     <div class="col-xs-2">{{ object.db_object }}</div>
     <div class="col-xs-2">{{ object.interface }}</div>

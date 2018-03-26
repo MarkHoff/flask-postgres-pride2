@@ -6,9 +6,6 @@ from flask_login import UserMixin
 from hashlib import md5
 from time import time
 import jwt
-from sqlalchemy.orm import relationship, backref
-from sqlalchemy import Table, Column, Integer, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
 
 
 followers = db.Table('followers',
@@ -78,6 +75,7 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
@@ -103,6 +101,7 @@ class Project(db.Model):
     se = db.Column(db.String(100))
     notes = db.Column(db.String(1000))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
     def __repr__(self):
         return '<Project {}>'.format(self.body)
 
@@ -128,14 +127,6 @@ class DbObject(db.Model):
     special_notes = db.Column(db.String(100))
     project_id = db.Column(db.Integer, db.ForeignKey('project.pid'))
     project_name = db.Column(db.String(100), db.ForeignKey('project.project_name'))
-
-    # project_name = relationship("Project")
-    # obj_rel = db.relationship('DbObject',
-    #                           primaryjoin='Project.id==DbObject.project_id',
-    #                           backref=db.backref('Project.id', lazy='dynamic'))
-
-
-
 
 
 @login.user_loader

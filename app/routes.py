@@ -8,11 +8,6 @@ from app.models import User, Post, Project, DbObject
 from werkzeug.urls import url_parse
 from datetime import datetime
 
-from sqlalchemy.orm import relationship, backref
-from sqlalchemy import Table, Column, Integer, ForeignKey, and_
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import session
-
 
 @app.before_request
 def before_request():
@@ -137,7 +132,7 @@ def reset_password_request():
                            title='Reset Password', form=form)
 
 
-@app.route('/projects', methods=['GET', 'POST'])
+@app.route('/add_project', methods=['GET', 'POST'])
 def projects():
     form = ProjectForm()
     if form.validate_on_submit():
@@ -204,7 +199,7 @@ def view_objects():
     return render_template('view_objects.html', title='View Objects', all_objects=all_obj)
 
 
-@app.route('/add_objects', methods=['GET', 'POST'])
+@app.route('/add_object', methods=['GET', 'POST'])
 def objects():
     form = DbObjectForm()
     if form.validate_on_submit():
@@ -225,6 +220,7 @@ def objects():
           active_in_prod = form.active_in_prod.data,
           order_by = form.order_by.data,
           segment_by = form.segment_by.data,
+          project_id = form.project_id.data,
           special_notes = form.special_notes.data
                           )
         db.session.add(dbobject)
@@ -251,34 +247,9 @@ def edit_object(id):
 
 @app.route('/object_detail/<id>')
 def object_detail(id):
-    obj_detail = db.session.query(DbObject).outerjoin(Project, and_(Project.pid == DbObject.project_id)).add_columns(
-        DbObject.db_object,
-        Project.project_name,
-        Project.pid,
-        Project.dev_lead,
-        Project.developers,
-        Project.release,
-        DbObject.dm_seq,
-        DbObject.data_in_qa0,
-        DbObject.data_type,
-        DbObject.schema,
-        DbObject.frequency,
-        DbObject.data_provider,
-        DbObject.providing_system,
-        DbObject.interface,
-        DbObject.topic,
-        DbObject.data_retention,
-        DbObject.latency,
-        DbObject.row_count_per_period,
-        DbObject.active_in_prod,
-        DbObject.order_by,
-        DbObject.segment_by,
-        DbObject.special_notes
-    ).filter_by(id=id).first_or_404()
-    return render_template('view_object_detail.html',
-                           title='Object Detail',
-                           object_detail=obj_detail
-                           )
+    # obj_detail = db.session.query(DbObject).outerjoin(Project, and_(Project.pid == DbObject.project_id)).add_columns(
+    obj_detail = db.session.query(DbObject).first_or_404()
+    return render_template('view_object_detail.html',title='Object Detail', object_detail=obj_detail)
 
 
 @app.route('/logout')
