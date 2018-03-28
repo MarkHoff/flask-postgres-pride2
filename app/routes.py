@@ -133,7 +133,7 @@ def reset_password_request():
 
 
 @app.route('/add_project', methods=['GET', 'POST'])
-def projects():
+def add_project():
     form = ProjectForm()
     if form.validate_on_submit():
         project = Project(project_name=form.project_name.data,
@@ -200,7 +200,7 @@ def view_objects():
 
 
 @app.route('/add_object', methods=['GET', 'POST'])
-def objects():
+def add_object():
     form = DbObjectForm()
     if form.validate_on_submit():
         dbobject = DbObject(
@@ -247,8 +247,12 @@ def edit_object(id):
 
 @app.route('/object_detail/<id>')
 def object_detail(id):
-    # obj_detail = db.session.query(DbObject).outerjoin(Project, and_(Project.pid == DbObject.project_id)).add_columns(
-    obj_detail = db.session.query(DbObject).first_or_404()
+    # obj_detail = db.session.query(DbObject).outerjoin(Project, (Project.pid == DbObject.project_id))
+    obj_detail = db.session.query(DbObject).join(Project).filter(DbObject.id == id).first_or_404()
+    print(obj_detail.project_id)
+    # obj_detail = db.session.query(DbObject).join(Project, (Project.pid == DbObject.project_id)).filter(id)
+    # )
+    # obj_detail = DbObject.query.join(Project).all()
     return render_template('view_object_detail.html',title='Object Detail', object_detail=obj_detail)
 
 

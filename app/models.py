@@ -101,9 +101,10 @@ class Project(db.Model):
     se = db.Column(db.String(100))
     notes = db.Column(db.String(1000))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    objects = db.relationship('DbObject', backref='projects')
 
     def __repr__(self):
-        return '<Project {}>'.format(self.body)
+        return '<Project {} - {}>'.format(self.pid, self.project_name)
 
 
 class DbObject(db.Model):
@@ -126,8 +127,13 @@ class DbObject(db.Model):
     segment_by = db.Column(db.String(100))
     special_notes = db.Column(db.String(100))
     project_id = db.Column(db.Integer, db.ForeignKey('project.pid'))
-    project_name = db.Column(db.String(100), db.ForeignKey('project.project_name'))
+    project_name = db.Column(db.String(100))
+    # projects = db.relationship('Project', backref=db.backref('dbobject', uselist=False))
+    # projects = db.relationship('Project', backref='objects')
 
+
+    def __repr__(self):
+        return '<DbObject {}>'.format(self.body)
 
 @login.user_loader
 def load_user(id):
