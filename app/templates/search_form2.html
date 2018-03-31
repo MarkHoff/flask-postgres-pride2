@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="container" style="border:1px solid #cecece;">
+                <div class="row"><div class="col-md-4">&nbsp;</div></div>
+                    <h3>Project Search</h3>
+                    <p><span>Search Criteria</span></p>
+                    <form action="/search2" method="post" id="searchform">
+                        <select name="proj_choices" form="searchform">
+                            <option selected="selected" value=""></option>
+                            <option value="Release">Release</option>
+                            <option value="PID">PID</option>
+                            <option value="Dev Lead">Dev Lead</option>
+                            <option value="Developer">Developer</option>
+                        </select>
+                        <div class="row"><div class="col-md-4">&nbsp;</div></div>
+                        <p><span>Search Value</span></p>
+                        <input type="text" name="proj_search"></input>
+                        <div class="row"><div class="col-md-4">&nbsp;</div></div>
+                        <div class="row"><div class="col-md-4">&nbsp;</div></div>
+                        <h3>Object Search</h3>
+                        <p><span>Search Criteria</span></p>
+                        <select name="obj_choices" form="searchform">
+                            <option selected="selected" value=""></option>
+                            <option value="Object Name">Object Name</option>
+                            <option value="Schema">Schema</option>
+                            <option value="Release">Release</option>
+                            <option value="Developer">Developer</option>
+                            <option value="Dev Lead">Dev Lead</option>
+                            <option value="DM Seq">DM Sequence</option>
+                            <option value="Topic">Topic</option>
+                            <option value="Interface">Interface</option>
+                            <option value="PID">PID</option>
+                        </select>
+                        <div class="row"><div class="col-md-4">&nbsp;</div></div>
+                        <p><span>Search Value</span></p>
+                        <input type="text" name="obj_search"></input>
+                        <div class="row"><div class="col-md-4">&nbsp;</div></div>
+                        <input type="submit" value="Search"></input>
+                    </form>
+                    <div class="row"><div class="col-md-4">&nbsp;</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+{% endblock %}

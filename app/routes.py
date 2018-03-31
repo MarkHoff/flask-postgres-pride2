@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, \
-    ResetPasswordForm, ProjectForm, EditProjectForm, DbObjectForm, EditDbObjectForm
+    ResetPasswordForm, ProjectForm, EditProjectForm, DbObjectForm, EditDbObjectForm, SearchForm
 from app.email import send_password_reset_email
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post, Project, DbObject
@@ -184,6 +184,7 @@ def edit_project(id):
     proj_id = Project.query.get(id)
     form = EditProjectForm(formdata=request.form, obj=proj_id)
     if form.validate_on_submit():
+        form.populate_obj(proj_id)
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('view_projects'))
@@ -245,15 +246,95 @@ def edit_object(id):
                                     form=form)
 
 
+@app.route('/delete_object/<id>', methods=['GET', 'POST'])
+def delete_object(id):
+    obj_id = db.session.query(DbObject).filter(DbObject.id == id).first_or_404()
+    db.session.delete(obj_id)
+    db.session.commit()
+    print("The object id is {} and the object name is {}".format(str(obj_id.id), str(obj_id.db_object)))
+    flash('Record no. {}, {} has been deleted'.format(str(obj_id.id), str(obj_id.db_object)))
+    all_obj = DbObject.query.all()
+    return render_template('view_objects.html', title='View Objects', all_objects=all_obj)
+
+
 @app.route('/object_detail/<id>')
 def object_detail(id):
-    # obj_detail = db.session.query(DbObject).outerjoin(Project, (Project.pid == DbObject.project_id))
     obj_detail = db.session.query(DbObject).join(Project).filter(DbObject.id == id).first_or_404()
     print(obj_detail.project_id)
-    # obj_detail = db.session.query(DbObject).join(Project, (Project.pid == DbObject.project_id)).filter(id)
-    # )
-    # obj_detail = DbObject.query.join(Project).all()
     return render_template('view_object_detail.html',title='Object Detail', object_detail=obj_detail)
+
+
+@app.route('/search', methods=['GET', 'POST'])
+def project_search():
+    search = SearchForm(request.form)
+    if request.method == 'POST':
+        print('search data - ' + str(search.data['string_search']))
+        return search_results(search.data)
+    else:
+        return render_template('search_form.html', form=search)
+
+
+@app.route('/search_results')
+def search_results(search):
+        choices = search['choices']
+        search_string = search['string_search']
+        print('Choices - ' + str(choices))
+        print('Search String - ' + str(search_string))
+        if choices == 'PID':
+            proj_list = Project.query.filter(Project.pid.like('%' + search_string + '%')).all()
+        elif choices == 'Dev Lead':
+            proj_list = Project.query.filter(Project.dev_lead.like('%' + search_string + '%')).all()
+        elif choices == 'Developers':
+            proj_list = Project.query.filter(Project.developers.like('%' + search_string + '%')).all()
+
+        print(proj_list)
+        return render_template('view_projects.html', title='Search Results', all_projects=proj_list)
+
+
+@app.route('/search2', methods=['GET', 'POST'])
+def search2():
+    if request.method == 'POST':
+        proj_choice = request.form['proj_choices']
+        print(proj_choice)
+        obj_choice = request.form['obj_choices']
+        print(obj_choice)
+        # print(search_string)
+
+        if proj_choice != '':
+            search_string = request.form['proj_search']
+            if proj_choice == 'PID':
+                proj_list = Project.query.filter(Project.pid.like('%' + search_string + '%')).all()
+            elif proj_choice == 'Dev Lead':
+                proj_list = Project.query.filter(Project.dev_lead.like('%' + search_string + '%')).all()
+            elif proj_choice == 'Developer':
+                proj_list = Project.query.filter(Project.developers.like('%' + search_string + '%')).all()
+            elif proj_choice == 'Release':
+                proj_list = Project.query.filter(Project.release.like('%' + search_string + '%')).all()
+            return render_template('view_projects.html', title='Search Results', all_projects=proj_list)
+        elif obj_choice != '':
+            search_string = request.form['obj_search']
+            if obj_choice == 'Release':
+                obj_list = DbObject.query.filter(DbObject.release.like('%' + search_string + '%')).all()
+            elif obj_choice == 'Schema':
+                obj_list = DbObject.query.filter(DbObject.schema.like('%' + search_string + '%')).all()
+            elif obj_choice == 'Object Name':
+                obj_list = DbObject.query.filter(DbObject.db_object.like('%' + search_string + '%')).all()
+            elif obj_choice == 'Dev Lead':
+                obj_list = DbObject.query.join(Project).filter(Project.dev_lead.like('%' + search_string + '%')).all()
+            elif obj_choice == 'Developer':
+                obj_list = DbObject.query.join(Project).filter(Project.developers.like('%' + search_string + '%')).all()
+            elif obj_choice == 'PID':
+                obj_list = DbObject.query.filter(DbObject.project_id.like('%' + search_string + '%')).all()
+            elif obj_choice == 'DM Seq':
+                obj_list = DbObject.query.filter(DbObject.dm_seq.like('%' + search_string + '%')).all()
+            elif obj_choice == 'Topic':
+                obj_list = DbObject.query.filter(DbObject.topic.like('%' + search_string + '%')).all()
+            elif obj_choice == 'Interface':
+                obj_list = DbObject.query.filter(DbObject.interface.like('%' + search_string + '%')).all()
+            return render_template('view_objects.html', title='Search Results', all_objects=obj_list)
+
+    else:
+        return render_template('search_form2.html')
 
 
 @app.route('/logout')

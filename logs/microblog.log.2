@@ -1,4 +1,4 @@
-2018-03-24 16:50:52,953 ERROR: Exception on /view_objects [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+2018-03-30 21:36:18,637 ERROR: Exception on /project_detail/6 [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
 Traceback (most recent call last):
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,8 +12,8 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/mark/PythonFlaskVertica/app/routes.py", line 199, in view_objects
-    return render_template('view_objects.html', title='View Objects', all_objects=all_obj)
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 178, in project_detail
+    project_detail=proj_detail
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 134, in render_template
     context, ctx.app)
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 116, in _render
@@ -26,7 +26,7 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/mark/PythonFlaskVertica/app/templates/view_objects.html", line 1, in top-level template code
+  File "/home/mark/PythonFlaskVertica/app/templates/view_project_detail.html", line 1, in top-level template code
     {% extends "base.html" %}
   File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 1, in top-level template code
     {% extends 'bootstrap/base.html' %}
@@ -38,27 +38,14 @@ Traceback (most recent call last):
     {% block body -%}
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 23, in block "body"
     {% block content -%}
-  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 49, in block "content"
+  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 50, in block "content"
     {% block app_content %}{% endblock %}
-  File "/home/mark/PythonFlaskVertica/app/templates/view_objects.html", line 12, in block "app_content"
-    {% include '_object.html' %}
-  File "/home/mark/PythonFlaskVertica/app/templates/_object.html", line 2, in top-level template code
-    <div class="col-xs-2">
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/helpers.py", line 333, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1805, in handle_url_build_error
-    reraise(exc_type, exc_value, tb)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
-    raise value
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/helpers.py", line 323, in url_for
-    force_external=external)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/werkzeug/routing.py", line 1776, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'object_detail' with values ['id']. Did you mean 'project_detail' instead?
-2018-03-24 16:51:10,461 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
-2018-03-24 16:51:10,461 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-03-24 16:51:10,461 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-03-24 16:51:55,622 ERROR: Exception on /edit_object/1 [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+  File "/home/mark/PythonFlaskVertica/app/templates/view_project_detail.html", line 8, in block "app_content"
+    <div class="col-md-4">&nbsp;</div>
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 430, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'object_detail' is undefined
+2018-03-30 21:37:44,409 ERROR: Exception on /project_detail/6 [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
 Traceback (most recent call last):
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -72,55 +59,36 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/mark/PythonFlaskVertica/app/routes.py", line 243, in edit_object
-    form=form)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 133, in render_template
-    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 869, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 830, in get_template
-    return self._load_template(name, self.make_globals(globals))
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 804, in _load_template
-    template = self.loader.load(self, name, globals)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/loaders.py", line 113, in load
-    source, filename, uptodate = self.get_source(environment, name)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 57, in get_source
-    return self._get_source_fast(environment, template)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 85, in _get_source_fast
-    raise TemplateNotFound(template)
-jinja2.exceptions.TemplateNotFound: edit_object_detail.html
-2018-03-24 16:51:55,622 ERROR: Exception on /edit_object/1 [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
-Traceback (most recent call last):
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 178, in project_detail
+    project_detail=proj_detail
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 134, in render_template
+    context, ctx.app)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 116, in _render
+    rv = template.render(context)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 780, in handle_exception
     reraise(exc_type, exc_value, tb)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
-    raise value
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/mark/PythonFlaskVertica/app/routes.py", line 243, in edit_object
-    form=form)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 133, in render_template
-    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 869, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 830, in get_template
-    return self._load_template(name, self.make_globals(globals))
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 804, in _load_template
-    template = self.loader.load(self, name, globals)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/loaders.py", line 113, in load
-    source, filename, uptodate = self.get_source(environment, name)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 57, in get_source
-    return self._get_source_fast(environment, template)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 85, in _get_source_fast
-    raise TemplateNotFound(template)
-jinja2.exceptions.TemplateNotFound: edit_object_detail.html
-2018-03-24 17:23:45,222 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
-2018-03-24 17:23:45,223 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-03-24 17:23:45,223 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-03-24 17:29:40,288 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/mark/PythonFlaskVertica/app/templates/view_project_detail.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block "doc"
+    {%- block html %}
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block "html"
+    {% block body -%}
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 23, in block "body"
+    {% block content -%}
+  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 50, in block "content"
+    {% block app_content %}{% endblock %}
+  File "/home/mark/PythonFlaskVertica/app/templates/view_project_detail.html", line 8, in block "app_content"
+    <div class="col-md-4">&nbsp;</div>
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 430, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'object_detail' is undefined

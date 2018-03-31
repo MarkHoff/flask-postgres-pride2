@@ -1,4 +1,17 @@
-2018-03-24 16:45:38,849 ERROR: Exception on /view_objects [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+2018-03-24 17:29:40,288 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-24 17:32:36,686 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-03-24 17:32:36,686 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-24 17:32:36,686 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-24 17:33:25,847 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-03-24 17:33:25,848 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-24 17:33:25,848 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-30 21:10:49,874 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-03-30 21:10:49,874 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-30 21:10:49,874 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-30 21:29:06,661 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-03-30 21:29:06,664 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-30 21:29:06,664 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-30 21:29:11,766 ERROR: Exception on /project_detail/1 [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
 Traceback (most recent call last):
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,8 +25,8 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/mark/PythonFlaskVertica/app/routes.py", line 199, in view_objects
-    return render_template('view_objects.html', title='View Objects', all_objects=all_obj)
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 178, in project_detail
+    project_detail=proj_detail
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 134, in render_template
     context, ctx.app)
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 116, in _render
@@ -26,7 +39,7 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/mark/PythonFlaskVertica/app/templates/view_objects.html", line 1, in top-level template code
+  File "/home/mark/PythonFlaskVertica/app/templates/view_project_detail.html", line 1, in top-level template code
     {% extends "base.html" %}
   File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 1, in top-level template code
     {% extends 'bootstrap/base.html' %}
@@ -38,24 +51,14 @@ Traceback (most recent call last):
     {% block body -%}
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 23, in block "body"
     {% block content -%}
-  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 49, in block "content"
+  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 50, in block "content"
     {% block app_content %}{% endblock %}
-  File "/home/mark/PythonFlaskVertica/app/templates/view_objects.html", line 12, in block "app_content"
-    {% include '_object.html' %}
-  File "/home/mark/PythonFlaskVertica/app/templates/_object.html", line 2, in top-level template code
-    <div class="col-xs-2"><a href="{{ url_for('object_detail', id=object.id) }}">
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/helpers.py", line 333, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1805, in handle_url_build_error
-    reraise(exc_type, exc_value, tb)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
-    raise value
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/helpers.py", line 323, in url_for
-    force_external=external)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/werkzeug/routing.py", line 1776, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'object_detail' with values ['id']. Did you mean 'project_detail' instead?
-2018-03-24 16:50:51,092 ERROR: Exception on /view_objects [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+  File "/home/mark/PythonFlaskVertica/app/templates/view_project_detail.html", line 8, in block "app_content"
+    <div class="col-md-4"><a href="{{ url_for('delete_object', id=object_detail.id) }}">Delete</a></div>
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 430, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'object_detail' is undefined
+2018-03-30 21:29:11,766 ERROR: Exception on /project_detail/1 [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
 Traceback (most recent call last):
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -69,8 +72,8 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/mark/PythonFlaskVertica/app/routes.py", line 199, in view_objects
-    return render_template('view_objects.html', title='View Objects', all_objects=all_obj)
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 178, in project_detail
+    project_detail=proj_detail
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 134, in render_template
     context, ctx.app)
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 116, in _render
@@ -83,7 +86,7 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/mark/PythonFlaskVertica/app/templates/view_objects.html", line 1, in top-level template code
+  File "/home/mark/PythonFlaskVertica/app/templates/view_project_detail.html", line 1, in top-level template code
     {% extends "base.html" %}
   File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 1, in top-level template code
     {% extends 'bootstrap/base.html' %}
@@ -95,20 +98,10 @@ Traceback (most recent call last):
     {% block body -%}
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 23, in block "body"
     {% block content -%}
-  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 49, in block "content"
+  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 50, in block "content"
     {% block app_content %}{% endblock %}
-  File "/home/mark/PythonFlaskVertica/app/templates/view_objects.html", line 12, in block "app_content"
-    {% include '_object.html' %}
-  File "/home/mark/PythonFlaskVertica/app/templates/_object.html", line 2, in top-level template code
-    <div class="col-xs-2">
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/helpers.py", line 333, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1805, in handle_url_build_error
-    reraise(exc_type, exc_value, tb)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
-    raise value
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/helpers.py", line 323, in url_for
-    force_external=external)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/werkzeug/routing.py", line 1776, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'object_detail' with values ['id']. Did you mean 'project_detail' instead?
+  File "/home/mark/PythonFlaskVertica/app/templates/view_project_detail.html", line 8, in block "app_content"
+    <div class="col-md-4"><a href="{{ url_for('delete_object', id=object_detail.id) }}">Delete</a></div>
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 430, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'object_detail' is undefined
