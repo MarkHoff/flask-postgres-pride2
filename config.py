@@ -3,8 +3,11 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:mh4913@localhost:5432/postgres'
-    # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+    # Use for local database
+    # SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:mh4913@localhost:5432/postgres'
+    # Use for Heroku database
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    # or \
     #     'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
