@@ -1,0 +1,28 @@
+id|project_name|pid|pmt|dev_lead|developers|release|sprint_schedule|lpm|pm|scrum_master|se|notes|user_id|impact|readiness_status|deployment_cr
+1|New Project|12345|54321|Eric Gonzalez|Kshama Punj|18.06|3/22/2018 - 4/12/2018|Gail Pardue|Lon Tanner|Vawn Schmitt|Rama Ati|Here are some notes.||||
+2|New Project 2|23456|2468|Toni Quattrochi|Rajesh Maher|18.08|6/1/2018 - 6/14/2018|Richard Quijano|Joe Schmoe|Subra|Jiya Peng|Here are some more notes.||||
+3|VPMS Backend & DB - Wave 2  |293586|464839|Eric |Patricia (DM, MD, KPI engine) |1806| IT1: 12/18/2017 – 1/12/2018 IT2: 1/15/2018 – 2/9/2018 IT3: 2/12/2018 – 3/9/2017 IT4: 3/12/2018 – 4/6/2018 IT5: 4/9/2018 – 5/4/2018 IT6: 5/7/2018 - 6/1/2018        ||Janet Perrineau |Janet Perrineau |Suryaprakash Mareddy |||Code ||
+4|NexGen SeGW for AIC |289865|457984|Toni |Rajesh |1806|   ||||Jiya Peng |||||
+5||287479CO ||Eric ||1806|   |||||||On Hold ||
+6|ADIG on vPE FFA and OSS/BSS development Release 1a |295793|471729/463205 |Huei  |Huei/Zhenyuan |1806|   ||  |Lon Tanner |Paul Madarasz |||code ||
+7| T07 72c PSD TechOps ECOMP Theme 7 Package 1 - 296151a |301267|470524 or 471913 |Eric |"Kshama (DM, MD)
+"|1806|"DEV: IT49: R10.3 2/12/2018 – 3/12/2018 IT50: R11.1 3/12/2018 – 4/9/2018 IT51: R11.2 4/9/2018 – 5/7/2018 IST: ITR 49: 3/26 Mon – 4/06 Fri (2 wks) ITR 49: 50: 4/09 Mon – 5/04 Fri (4 wks) ITR 49: 50,51: 5/07 Mon – 6/08 Fri (5 wks)  
+"||||Shau-ann Chang (sc790u) |||Code |All DMs have been materialized and project is ready to deploy.   |
+8|VPMS Backend & DB - Wave 2  |293586||Eric |Patricia (DM, MD, KPI engine) |1806|"IT49 2/5/2018 – 3/2/2018 IT50 3/5/2018 – 3/30/2018 IT51  4/2/2018 - 4/27/207
+"|||Erica  Chao (ec698j) |Suryaprakash Mareddy (sm8290) |||Code ||
+9|Automation - End-to-End Incident Management - Release 1 - PI 3  |298822B |469049|Eric |Patricia (DMaaP, EE) |1802|   ||Theresa Siordia-Rybarski (ts1916) |Theresa Siordia-Rybarski (ts1916) |Rick Quagliata (rq2591) |||Code |Project is ready to deploy.   |
+10|Support Firstnet’s high visibility |QH-MS-1804001 |vetl 471531/vertica 476634 |Toni |Developers: Patricia, Kshama |1806|   ||? |? |Justine Lau (jl905g) |||Code ||
+11|Adding GMIS vPE to iTAS |295793|463205|Huei  |Huei/Zhenyuan |1806|   ||  |Lon Tanner |Paul Madarasz |||code ||
+12|open DCAE to support Next Gen Virtual Route Reflector (vRR) |282055d |471533/469760 |Huei |Huei/Zhenyuan |1806|   ||  |Jane Chung |Jeff Yu |||Code ||
+13|T17.13.1 DCAE Platform Evolution |301368|472632/470527 |Huei |Huei/Zhenyuan |1806|   |Charles Cook  ||Swati Chauhan |Wen Shang |||Code ||
+14|"SAREA Automation Optimization and Contended ETH
+"|294728c |472635/470103 |Huei |Huei/Zhenyuan |1806|   |||Adam Beaver |Jeff Jaggernauth (jj8161) |||Code ||
+15|Robocalling TN Authentication (STIR/SHAKEN) - USP |297122|471550/466778 |Huei |Zhenyuan |1806|   |||Kris Hubble (wh4355) |Mingming Yu (my2263) |||Code  ||
+16||297131A |471516|Eric |Kshama Punj |1806|"R12.1 2018-07-01 M 4w [6/4/2018 – 7/2/2018] (Note: 18.06 release weekend is 6/09 – 6/10/18) R11.3 2018-06-03 M 4w [5/7/2018 – 6/4/2018] R11.2 2018-05-06 M 4w [4/9/2018 – 5/7/2018] R11.1 2018-04-08 M 4w [3/12/2018 – 4/9/2018] R10.3 2018-03-11 M 4w [2/12/2018 – 3/12/2018] R10.2 2018-02-11 M 4w [1/15/2018 – 2/12/2018] (Note: 18.02 release weekend is 2/10 – 2/11/18)
+"|||Jane Chung (jc1858) |Mingming Yu (my2263) |||Code ||
+17||297519|471801|Eric |Patricia Kshama Srinivas |1806|"IT50 (R11.1 2018-04-08 M 4w)  3/12/18 – 4/8/18 IT51 (R11.2 2018-05-06 M 4w)  4/9/18 – 5/6/18
+"|||Kris Hubble (wh4355) |Deepa Saxena (ds521a) Ed Berberich (eb1847) |||Code ||
+18|NoD - Move to AIC3 0&nbsp; Features&nbsp;&nbsp; testing |291247D |471545|Eric |Kshama |1806|IT 11.1 3/23/2018 – 4/8/2018 IT 11.2 4/9/2018 - 4/20/2018  |||Lon Tanner |Stephen Lam |||Code ||
+19|vUSP Geo-Redundancy Redesign (2+2) |295390|471607/464532 |Huei ||1806|   |||||||TSO ||
+20|New Day vPE Service Assurance and Delivery ADI - 297100a |297100a |471713|Huei  |Huei |1806|   |||||||Code ||
+21|Robocalling TN Authentication (STIR/SHAKEN) - USP (ID: 297122) |297122|471550/466778 |Huei  |Kshama |1806|   |||||||Code ||

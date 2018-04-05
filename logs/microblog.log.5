@@ -1,1 +1,90 @@
-2018-03-24 17:29:40,288 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-31 19:26:18,550 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-03-31 19:26:18,553 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-31 19:26:18,553 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-31 19:27:51,623 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-03-31 19:27:51,623 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-31 19:27:51,623 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-31 19:28:04,683 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-03-31 19:28:04,683 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-31 19:28:04,683 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-31 19:28:09,246 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-03-31 19:28:09,246 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-31 19:28:09,246 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-31 19:28:16,098 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-03-31 19:28:16,098 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-31 19:28:16,098 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-31 19:28:37,801 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-03-31 19:28:37,802 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-31 19:28:37,802 INFO: Microblog startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-03-31 19:30:18,013 ERROR: Exception on /add_project [POST] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1193, in _execute_context
+    context)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 507, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.DataError: value too long for type character varying(10)
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 153, in add_project
+    db.session.commit()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/scoping.py", line 153, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 943, in commit
+    self.transaction.commit()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 467, in commit
+    self._prepare_impl()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 447, in _prepare_impl
+    self.session.flush()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2243, in flush
+    self._flush(objects)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2369, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/util/langhelpers.py", line 66, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 187, in reraise
+    raise value
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2333, in _flush
+    flush_context.execute()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/unitofwork.py", line 391, in execute
+    rec.execute(self)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/unitofwork.py", line 556, in execute
+    uow
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/persistence.py", line 181, in save_obj
+    mapper, table, insert)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/persistence.py", line 866, in _emit_insert_statements
+    execute(statement, params)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 948, in execute
+    return meth(self, multiparams, params)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/sql/elements.py", line 269, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1060, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1200, in _execute_context
+    context)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1413, in _handle_dbapi_exception
+    exc_info
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 186, in reraise
+    raise value.with_traceback(tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1193, in _execute_context
+    context)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 507, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DataError: (psycopg2.DataError) value too long for type character varying(10)
+ [SQL: 'INSERT INTO project (project_name, pid, pmt, dev_lead, developers, release, sprint_schedule, lpm, pm, scrum_master, se, notes, user_id) VALUES (%(project_name)s, %(pid)s, %(pmt)s, %(dev_lead)s, %(developers)s, %(release)s, %(sprint_schedule)s, %(lpm)s, %(pm)s, %(scrum_master)s, %(se)s, %(notes)s, %(user_id)s) RETURNING project.id'] [parameters: {'project_name': 'New Project', 'pid': '12345', 'pmt': '54321', 'dev_lead': 'Eric Gonzalez', 'developers': 'Kshama Punj', 'release': '18.06', 'sprint_schedule': '3/22/2018 - 4/12/2018', 'lpm': 'Gail Pardue', 'pm': 'Lon Tanner', 'scrum_master': 'Vawn Schmitt', 'se': 'Rama Ati', 'notes': 'Here are some notes.', 'user_id': None}] (Background on this error at: http://sqlalche.me/e/9h9h)
