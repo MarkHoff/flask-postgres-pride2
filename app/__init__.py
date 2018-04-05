@@ -38,7 +38,7 @@ if not app.debug:
         app.logger.addHandler(mail_handler)
     if not os.path.exists('logs'):
         os.mkdir('logs')
-    file_handler = RotatingFileHandler('logs/microblog.log', maxBytes=10240,
+    file_handler = RotatingFileHandler('logs/pride2.log', maxBytes=10240,
                                        backupCount=10)
     file_handler.setFormatter(logging.Formatter(
         '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
@@ -46,7 +46,7 @@ if not app.debug:
     app.logger.addHandler(file_handler)
 
     app.logger.setLevel(logging.INFO)
-    app.logger.info('Microblog startup')
+    app.logger.info('Pride2 startup')
 
     if app.config['LOG_TO_STDOUT']:
         stream_handler = logging.StreamHandler()
@@ -55,7 +55,7 @@ if not app.debug:
     else:
         if not os.path.exists('logs'):
             os.mkdir('logs')
-        file_handler = RotatingFileHandler('logs/microblog.log',
+        file_handler = RotatingFileHandler('logs/pride2.log',
                                            maxBytes=10240, backupCount=10)
         file_handler.setFormatter(logging.Formatter(
             '%(asctime)s %(levelname)s: %(message)s '
@@ -64,7 +64,7 @@ if not app.debug:
         app.logger.addHandler(file_handler)
 
     app.logger.setLevel(logging.INFO)
-    app.logger.info('Microblog startup')
+    app.logger.info('Pride2 startup')
 
 
 from app import routes, models, errors
