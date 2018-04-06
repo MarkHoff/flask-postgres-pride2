@@ -100,7 +100,7 @@ class Project(db.Model):
     scrum_master = db.Column(db.String(100))
     se = db.Column(db.String(100))
     notes = db.Column(db.String(10000))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     impact = db.Column(db.String(100))
     readiness_status = db.Column(db.String(100))
     deployment_cr = db.Column(db.String(100))
