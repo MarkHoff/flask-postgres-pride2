@@ -1,0 +1,80 @@
+postgres=# \d
+                List of relations
+ Schema |       Name       |   Type   |  Owner   
+--------+------------------+----------+----------
+ public | alembic_version  | table    | postgres
+ public | db_object        | table    | postgres
+ public | db_object_id_seq | sequence | postgres
+ public | project          | table    | postgres
+ public | project_id_seq   | sequence | postgres
+ public | user             | table    | postgres
+ public | user_id_seq      | sequence | postgres
+
+
+                                     Table "public.db_object"
+        Column        |          Type           |                       Modifiers                        
+----------------------+-------------------------+--------------------------------------------------------
+ id                   | integer                 | not null default nextval('db_object_id_seq'::regclass)
+ dm_seq               | character varying(100)  | 
+ data_type            | character varying(100)  | 
+ schema               | character varying(100)  | 
+ db_object            | character varying(100)  | 
+ frequency            | character varying(100)  | 
+ data_provider        | character varying(100)  | 
+ providing_system     | character varying(100)  | 
+ interface            | character varying(100)  | 
+ topic                | character varying(100)  | 
+ data_retention       | character varying(100)  | 
+ latency              | character varying(100)  | 
+ data_in_qa0          | character varying(100)  | 
+ row_count_per_period | character varying(100)  | 
+ active_in_prod       | character varying(100)  | 
+ order_by             | character varying(100)  | 
+ segment_by           | character varying(100)  | 
+ special_notes        | character varying(1000) | 
+ project_id           | character varying(100)  | 
+ project_name         | character varying(100)  | 
+Indexes:
+    "db_object_pkey" PRIMARY KEY, btree (id)
+
+
+
+postgres=# \d project
+                                       Table "public.project"
+      Column      |           Type           |                      Modifiers                       
+------------------+--------------------------+------------------------------------------------------
+ id               | integer                  | not null default nextval('project_id_seq'::regclass)
+ project_name     | character varying(100)   | 
+ pid              | character varying(100)   | 
+ pmt              | character varying(100)   | 
+ dev_lead         | character varying(100)   | 
+ developers       | character varying(100)   | 
+ release          | character varying(100)   | 
+ sprint_schedule  | character varying(500)   | 
+ lpm              | character varying(100)   | 
+ pm               | character varying(100)   | 
+ scrum_master     | character varying(100)   | 
+ se               | character varying(100)   | 
+ notes            | character varying(10000) | 
+ impact           | character varying(100)   | 
+ readiness_status | character varying(100)   | 
+ deployment_cr    | character varying(100)   | 
+Indexes:
+    "project_pkey" PRIMARY KEY, btree (id)
+
+postgres=# \d user
+                                       Table "public.user"
+    Column     |            Type             |                     Modifiers                     
+---------------+-----------------------------+---------------------------------------------------
+ id            | integer                     | not null default nextval('user_id_seq'::regclass)
+ username      | character varying(64)       | 
+ email         | character varying(120)      | 
+ password_hash | character varying(128)      | 
+ about_me      | character varying(140)      | 
+ last_seen     | timestamp without time zone | 
+Indexes:
+    "user_pkey" PRIMARY KEY, btree (id)
+    "ix_user_email" UNIQUE, btree (email)
+    "ix_user_username" UNIQUE, btree (username)
+
+

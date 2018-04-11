@@ -1,0 +1,59 @@
+2018-04-11 15:08:07,377 ERROR: Exception on /favicon.ico [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/util/_collections.py", line 999, in __call__
+    return self.registry[key]
+KeyError: 140052255217408
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1610, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1831, in preprocess_request
+    rv = func()
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 14, in before_request
+    if current_user.is_authenticated:
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/werkzeug/local.py", line 347, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/werkzeug/local.py", line 306, in _get_current_object
+    return self.__local()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_login/utils.py", line 26, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_login/utils.py", line 335, in _get_user
+    current_app.login_manager._load_user()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_login/login_manager.py", line 359, in _load_user
+    return self.reload_user()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_login/login_manager.py", line 321, in reload_user
+    user = self.user_callback(user_id)
+  File "/home/mark/PythonFlaskVertica/app/models.py", line 142, in load_user
+    return User.query.get(int(id))
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py", line 514, in __get__
+    return type.query_class(mapper, session=self.sa.session())
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/scoping.py", line 74, in __call__
+    return self.registry()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/util/_collections.py", line 1001, in __call__
+    return self.registry.setdefault(key, self.createfunc())
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2939, in __call__
+    return self.class_(**local_kw)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py", line 143, in __init__
+    bind = options.pop('bind', None) or db.engine
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py", line 877, in engine
+    return self.get_engine()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py", line 896, in get_engine
+    return connector.get_engine()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py", line 556, in get_engine
+    self._sa.apply_driver_hacks(self._app, info, options)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py", line 830, in apply_driver_hacks
+    if info.drivername.startswith('mysql'):
+AttributeError: 'NoneType' object has no attribute 'drivername'
+2018-04-11 15:08:16,263 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-04-11 15:08:16,263 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-04-11 15:08:16,263 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
