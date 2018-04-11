@@ -1,0 +1,429 @@
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such column: db_object.project_name [SQL: 
+'SELECT db_object.id AS db_object_id, 
+db_object.dm_seq AS db_object_dm_seq, 
+db_object.data_type AS db_object_data_type, 
+db_object.schema AS db_object_schema, 
+db_object.db_object AS db_object_db_object, 
+db_object.frequency AS db_object_frequency, 
+db_object.data_provider AS db_object_data_provider, 
+db_object.providing_system AS db_object_providing_system, 
+db_object.interface AS db_object_interface, 
+db_object.topic AS db_object_topic, 
+db_object.data_retention AS db_object_data_retention, 
+db_object.latency AS db_object_latency, 
+db_object.data_in_qa0 AS db_object_data_in_qa0, 
+db_object.row_count_per_period AS db_object_row_count_per_period, 
+db_object.active_in_prod AS db_object_active_in_prod, 
+db_object.order_by AS db_object_order_by, 
+db_object.segment_by AS db_object_segment_by, 
+db_object.special_notes AS db_object_special_notes, 
+db_object.project_id AS db_object_project_id, 
+db_object.project_name AS db_object_project_name 
+\nFROM db_object JOIN project ON project.id = db_object.project_id \nWHERE project.id = ?\n LIMIT ? OFFSET ?'] [parameters: ('1', 1, 0)] (Background on this error at: http://sqlalche.me/e/e3q8)
+
+
+SELECT db_object.id AS db_object_id, 
+db_object.dm_seq AS db_object_dm_seq, 
+db_object.data_type AS db_object_data_type, 
+db_object.schema AS db_object_schema, 
+db_object.db_object AS db_object_db_object, 
+db_object.frequency AS db_object_frequency, 
+db_object.data_provider AS db_object_data_provider, 
+db_object.providing_system AS db_object_providing_system, 
+db_object.interface AS db_object_interface, 
+db_object.topic AS db_object_topic, 
+db_object.data_retention AS db_object_data_retention, 
+db_object.latency AS db_object_latency, 
+db_object.data_in_qa0 AS db_object_data_in_qa0, 
+db_object.row_count_per_period AS db_object_row_count_per_period, 
+db_object.active_in_prod AS db_object_active_in_prod, 
+db_object.order_by AS db_object_order_by, 
+db_object.segment_by AS db_object_segment_by, 
+db_object.special_notes AS db_object_special_notes, 
+db_object.project_id AS db_object_project_id, 
+db_object.project_name AS db_object_project_name 
+FROM db_object JOIN project ON project.pid = db_object.project_id 
+WHERE 1
+
+
+
+
+sqlalchemy.exc.DataError: (psycopg2.DataError) value too long for type character varying(10)
+ [SQL: 'INSERT INTO project (project_name, pid, pmt, dev_lead, developers, release, sprint_schedule, lpm, pm, scrum_master, se, notes, user_id) VALUES (%(project_name)s, %(pid)s, %(pmt)s, %(dev_lead)s, %(developers)s, %(release)s, %(sprint_schedule)s, %(lpm)s, %(pm)s, %(scrum_master)s, %(se)s, %(notes)s, %(user_id)s) RETURNING project.id'] [parameters: {'project_name': 'New Project', 'pid': '12345', 'pmt': '54321', 'dev_lead': 'Eric Gonzalez', 'developers': 'Kshama Punj', 'release': '18.06', 'sprint_schedule': '3/22/2018 - 4/12/2018', 'lpm': 'Gail Pardue', 'pm': 'Lon Tanner', 'scrum_master': 'Vawn Schmitt', 'se': 'Rama Ati', 'notes': 'Here are some notes.', 'user_id': None}] (Background on this error at: http://sqlalche.me/e/9h9h)
+127.0.0.1 - - [31/Mar/2018 19:33:39] "POST /add_project HTTP/1.1" 500 -
+
+COPY db_object (project_id, dm_seq, data_type, schema, db_object, frequency,
+data_provider, providing_system, interface, data_retention, latency, data_in_qa0, 
+row_count_per_period, active_in_prod, order_by, segment_by, special_notes)
+FROM '/home/mark/PythonFlaskVertica/db_object_import.csv' DELIMITER '|' CSV HEADER;
+
+
+CREATE TABLE db_object_tmp (
+dm_seq  character varying(100),   
+data_type character varying(100), 
+schema character varying(100), 
+db_object character varying(100), 
+frequency character varying(100), 
+data_provider character varying(100), 
+providing_system character varying(100), 
+interface character varying(100), 
+topic character varying(100),
+data_retention character varying(100), 
+latency character varying(100),
+data_in_qa0 character varying(100), 
+row_count_per_period character varying(100), 
+active_in_prod character varying(100), 
+order_by character varying(100),
+segment_by character varying(100), 
+special_notes character varying(1000), 
+project_id character varying(100),
+project_name character varying(100)
+); 
+
+mark@MarksUbuntuLaptop:~/PythonFlaskVertica$ heroku apps:create flask-pride2
+Creating ⬢ flask-pride2... done
+https://flask-pride2.herokuapp.com/ | https://git.heroku.com/flask-pride2.git
+
+mark@MarksUbuntuLaptop:~/PythonFlaskVertica$ heroku addons:add heroku-postgresql:hobby-dev
+Creating heroku-postgresql:hobby-dev on ⬢ flask-pride2... !
+ ▸    Invalid credentials provided.
+Enter your Heroku credentials:
+Email: mark.hoffman9@gmail.com
+Password: ***********
+Creating heroku-postgresql:hobby-dev on ⬢ flask-pride2... free
+Database has been created and is available
+ ! This database is empty. If upgrading, you can transfer
+ ! data from another database with pg:copy
+Created postgresql-triangular-13002 as DATABASE_URL
+Use heroku addons:docs heroku-postgresql to view documentation
+
+mark@MarksUbuntuLaptop:~/PythonFlaskVertica$ heroku config:set LOG_TO_STDOUT=1
+Setting LOG_TO_STDOUT and restarting ⬢ flask-pride2... done, v4
+LOG_TO_STDOUT: 1
+mark@MarksUbuntuLaptop:~/PythonFlaskVertica$ heroku config:set FLASK_APP=microblog.py
+Setting FLASK_APP and restarting ⬢ flask-pride2... done, v5
+FLASK_APP: microblog.py
+
+
+
+
+### Deploy to Heroku #####
+
+mark@MarksUbuntuLaptop:~/PythonFlaskVertica$ git push heroku master
+Counting objects: 271, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (262/262), done.
+Writing objects: 100% (271/271), 2.23 MiB | 123.00 KiB/s, done.
+Total 271 (delta 145), reused 0 (delta 0)
+remote: Compressing source files... done.
+remote: Building source:
+remote: 
+remote: -----> Python app detected
+remote: -----> Installing python-3.6.4
+remote: -----> Installing pip
+remote: -----> Installing requirements with pip
+remote:        Collecting alembic==0.9.8 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 1))
+remote:          Downloading alembic-0.9.8.tar.gz (1.0MB)
+remote:        Collecting Babel==2.5.3 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 2))
+remote:          Downloading Babel-2.5.3-py2.py3-none-any.whl (6.8MB)
+remote:        Collecting blinker==1.4 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 3))
+remote:          Downloading blinker-1.4.tar.gz (111kB)
+remote:        Collecting certifi==2018.1.18 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 4))
+remote:          Downloading certifi-2018.1.18-py2.py3-none-any.whl (151kB)
+remote:        Collecting click==6.7 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 5))
+remote:          Downloading click-6.7-py2.py3-none-any.whl (71kB)
+remote:        Collecting dominate==2.3.1 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 6))
+remote:          Downloading dominate-2.3.1.tar.gz
+remote:        Collecting Flask==0.12.2 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 7))
+remote:          Downloading Flask-0.12.2-py2.py3-none-any.whl (83kB)
+remote:        Collecting Flask-Babel==0.11.2 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 8))
+remote:          Downloading Flask_Babel-0.11.2-py2.py3-none-any.whl
+remote:        Collecting Flask-Bootstrap==3.3.7.1 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 9))
+remote:          Downloading Flask-Bootstrap-3.3.7.1.tar.gz (456kB)
+remote:        Collecting Flask-HTTPAuth==3.2.3 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 10))
+remote:          Downloading Flask_HTTPAuth-3.2.3-py2.py3-none-any.whl
+remote:        Collecting Flask-Login==0.4.1 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 11))
+remote:          Downloading Flask-Login-0.4.1.tar.gz
+remote:        Collecting Flask-Mail==0.9.1 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 12))
+remote:          Downloading Flask-Mail-0.9.1.tar.gz (45kB)
+remote:        Collecting Flask-Migrate==2.1.1 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 13))
+remote:          Downloading Flask_Migrate-2.1.1-py2.py3-none-any.whl
+remote:        Collecting Flask-Moment==0.6.0 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 14))
+remote:          Downloading Flask_Moment-0.6.0-py2.py3-none-any.whl
+remote:        Collecting Flask-SQLAlchemy==2.3.2 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 15))
+remote:          Downloading Flask_SQLAlchemy-2.3.2-py2.py3-none-any.whl
+remote:        Collecting Flask-WTF==0.14.2 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 16))
+remote:          Downloading Flask_WTF-0.14.2-py2.py3-none-any.whl
+remote:        Collecting guess-language==0.2 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 17))
+remote:          Downloading guess-language-0.2.tar.gz (98kB)
+remote:        Collecting itsdangerous==0.24 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 18))
+remote:          Downloading itsdangerous-0.24.tar.gz (46kB)
+remote:        Collecting Jinja2==2.10 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 19))
+remote:          Downloading Jinja2-2.10-py2.py3-none-any.whl (126kB)
+remote:        Collecting Mako==1.0.7 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 20))
+remote:          Downloading Mako-1.0.7.tar.gz (564kB)
+remote:        Collecting MarkupSafe==1.0 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 21))
+remote:          Downloading MarkupSafe-1.0.tar.gz
+remote:        Collecting pipenv==11.8.0 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 22))
+remote:          Downloading pipenv-11.8.0.tar.gz (5.0MB)
+remote:        Collecting psycopg2==2.7.4 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 23))
+remote:          Downloading psycopg2-2.7.4-cp36-cp36m-manylinux1_x86_64.whl (2.7MB)
+remote:        Collecting PyJWT==1.6.0 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 24))
+remote:          Downloading PyJWT-1.6.0-py2.py3-none-any.whl
+remote:        Collecting python-dateutil==2.6.1 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 25))
+remote:          Downloading python_dateutil-2.6.1-py2.py3-none-any.whl (194kB)
+remote:        Collecting python-dotenv==0.8.2 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 26))
+remote:          Downloading python_dotenv-0.8.2-py2.py3-none-any.whl
+remote:        Collecting python-editor==1.0.3 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 27))
+remote:          Downloading python-editor-1.0.3.tar.gz
+remote:        Collecting pytz==2018.3 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 28))
+remote:          Downloading pytz-2018.3-py2.py3-none-any.whl (509kB)
+remote:        Collecting six==1.11.0 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 29))
+remote:          Downloading six-1.11.0-py2.py3-none-any.whl
+remote:        Collecting SQLAlchemy==1.2.4 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 30))
+remote:          Downloading SQLAlchemy-1.2.4.tar.gz (5.6MB)
+remote:        Collecting virtualenv==15.1.0 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 31))
+remote:          Downloading virtualenv-15.1.0-py2.py3-none-any.whl (1.8MB)
+remote:        Collecting virtualenv-clone==0.3.0 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 32))
+remote:          Downloading virtualenv_clone-0.3.0-py2.py3-none-any.whl
+remote:        Collecting visitor==0.1.3 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 33))
+remote:          Downloading visitor-0.1.3.tar.gz
+remote:        Collecting Werkzeug==0.14.1 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 34))
+remote:          Downloading Werkzeug-0.14.1-py2.py3-none-any.whl (322kB)
+remote:        Collecting WTForms==2.1 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 35))
+remote:          Downloading WTForms-2.1.zip (553kB)
+remote:        Collecting gunicorn==19.7.1 (from -r /tmp/build_79cb9159f31b47399f4111e66c04803f/requirements.txt (line 36))
+remote:          Downloading gunicorn-19.7.1-py2.py3-none-any.whl (111kB)
+remote:        Installing collected packages: SQLAlchemy, MarkupSafe, Mako, python-editor, six, python-dateutil, alembic, pytz, Babel, blinker, certifi, click, dominate, Jinja2, itsdangerous, Werkzeug, Flask, Flask-Babel, visitor, Flask-Bootstrap, Flask-HTTPAuth, Flask-Login, Flask-Mail, Flask-SQLAlchemy, Flask-Migrate, Flask-Moment, WTForms, Flask-WTF, guess-language, virtualenv, virtualenv-clone, pipenv, psycopg2, PyJWT, python-dotenv, gunicorn
+remote:          Running setup.py install for SQLAlchemy: started
+remote:            Running setup.py install for SQLAlchemy: finished with status 'done'
+remote:          Running setup.py install for MarkupSafe: started
+remote:            Running setup.py install for MarkupSafe: finished with status 'done'
+remote:          Running setup.py install for Mako: started
+remote:            Running setup.py install for Mako: finished with status 'done'
+remote:          Running setup.py install for python-editor: started
+remote:            Running setup.py install for python-editor: finished with status 'done'
+remote:          Running setup.py install for alembic: started
+remote:            Running setup.py install for alembic: finished with status 'done'
+remote:          Running setup.py install for blinker: started
+remote:            Running setup.py install for blinker: finished with status 'done'
+remote:          Running setup.py install for dominate: started
+remote:            Running setup.py install for dominate: finished with status 'done'
+remote:          Running setup.py install for itsdangerous: started
+remote:            Running setup.py install for itsdangerous: finished with status 'done'
+remote:          Running setup.py install for visitor: started
+remote:            Running setup.py install for visitor: finished with status 'done'
+remote:          Running setup.py install for Flask-Bootstrap: started
+remote:            Running setup.py install for Flask-Bootstrap: finished with status 'done'
+remote:          Running setup.py install for Flask-Login: started
+remote:            Running setup.py install for Flask-Login: finished with status 'done'
+remote:          Running setup.py install for Flask-Mail: started
+remote:            Running setup.py install for Flask-Mail: finished with status 'done'
+remote:          Running setup.py install for WTForms: started
+remote:            Running setup.py install for WTForms: finished with status 'done'
+remote:          Running setup.py install for guess-language: started
+remote:            Running setup.py install for guess-language: finished with status 'done'
+remote:          Running setup.py install for pipenv: started
+remote:            Running setup.py install for pipenv: finished with status 'done'
+remote:        Successfully installed Babel-2.5.3 Flask-0.12.2 Flask-Babel-0.11.2 Flask-Bootstrap-3.3.7.1 Flask-HTTPAuth-3.2.3 Flask-Login-0.4.1 Flask-Mail-0.9.1 Flask-Migrate-2.1.1 Flask-Moment-0.6.0 Flask-SQLAlchemy-2.3.2 Flask-WTF-0.14.2 Jinja2-2.10 Mako-1.0.7 MarkupSafe-1.0 PyJWT-1.6.0 SQLAlchemy-1.2.4 WTForms-2.1 Werkzeug-0.14.1 alembic-0.9.8 blinker-1.4 certifi-2018.1.18 click-6.7 dominate-2.3.1 guess-language-0.2 gunicorn-19.7.1 itsdangerous-0.24 pipenv-11.8.0 psycopg2-2.7.4 python-dateutil-2.6.1 python-dotenv-0.8.2 python-editor-1.0.3 pytz-2018.3 six-1.11.0 virtualenv-15.1.0 virtualenv-clone-0.3.0 visitor-0.1.3
+remote: 
+remote: -----> Discovering process types
+remote:        Procfile declares types -> web
+remote: 
+remote: -----> Compressing...
+remote:        Done: 68.1M
+remote: -----> Launching...
+remote:        Released v6
+remote:        https://flask-pride2.herokuapp.com/ deployed to Heroku
+remote: 
+remote: Verifying deploy... done.
+To https://git.heroku.com/flask-pride2.git
+ * [new branch]      master -> master
+
+
+from flask-marksmicroblog
+postgres://ukunhitjhihoia:dca8c7f0c327719de493debddb4223e112a6380154bf5d353a434dcba71181c8@ec2-54-243-239-66.compute-1.amazonaws.com:5432/d1jh4qgq2tokbs
+
+
+
+                    <!--<li><a href="{{ url_for('user', username=current_user.username) }}">Profile</a></li>-->
+
+
+
+
+AWS Credentials:
+
+User Name:  MarkHoff0213
+Password: PManning_18
+
+Access Key
+AKIAJSZRL5ZOJW27TYQA
+
+Secret Key  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
+
+AWS Management Console:
+https://979539794655.signin.aws.amazon.com/console
+
+
+   aa163f6..f127224  master -> master
+(flask) mark@MarksUbuntuLaptop:~/PythonFlaskVertica$ heroku config:set AWS_ACCESS_KEY_ID=AKIAJSZRL5ZOJW27TYQA AWS_SECRET_ACCESS=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
+Setting AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS and restarting ⬢ flask-pride2... done, v14
+AWS_ACCESS_KEY_ID: AKIAJSZRL5ZOJW27TYQA
+AWS_SECRET_ACCESS: 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
+
+Bucket Name: pride-postgres-backup
+
+(flask) mark@MarksUbuntuLaptop:~/PythonFlaskVertica$ heroku config:set S3_BUCKET_NAME=pride-postgres-backup
+Setting S3_BUCKET_NAME and restarting ⬢ flask-pride2... done, v15
+S3_BUCKET_NAME: pride-postgres-backup
+
+http://s3.amazonaws.com/
+
+Heroku database 
+postgres://wreqweovhpyras:d1f0e966ed61717a60e75c4cee6db3016505b7ac31aab8d5d0ec6afb550231d8@ec2-54-197-250-121.compute-1.amazonaws.com:5432/d90c75dl67fjp3
+
+
+(flask) mark@MarksUbuntuLaptop:~/PythonFlaskVertica$ PGPASSWORD=d1f0e966ed61717a60e75c4cee6db3016505b7ac31aab8d5d0ec6afb550231d8 pg_restore --verbose --clean --no-acl --no-owner -h ec2-54-197-250-121.compute-1.amazonaws.com -U wreqweovhpyras -d d90c75dl67fjp3 -p 5432 ~/data.dump
+pg_restore: connecting to database for restore
+pg_restore: dropping INDEX ix_user_username
+pg_restore: [archiver (db)] Error while PROCESSING TOC:
+pg_restore: [archiver (db)] Error from TOC entry 2039; 1259 16533 INDEX ix_user_username postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  index "ix_user_username" does not exist
+    Command was: DROP INDEX public.ix_user_username;
+
+pg_restore: dropping INDEX ix_user_email
+pg_restore: [archiver (db)] Error from TOC entry 2038; 1259 16532 INDEX ix_user_email postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  index "ix_user_email" does not exist
+    Command was: DROP INDEX public.ix_user_email;
+
+pg_restore: dropping CONSTRAINT user_pkey
+pg_restore: [archiver (db)] Error from TOC entry 2041; 2606 16531 CONSTRAINT user_pkey postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  relation "public.user" does not exist
+    Command was: ALTER TABLE ONLY public."user" DROP CONSTRAINT user_pkey;
+
+pg_restore: dropping CONSTRAINT project_pkey
+pg_restore: [archiver (db)] Error from TOC entry 2045; 2606 16702 CONSTRAINT project_pkey postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  relation "public.project" does not exist
+    Command was: ALTER TABLE ONLY public.project DROP CONSTRAINT project_pkey;
+
+pg_restore: dropping CONSTRAINT db_object_pkey
+pg_restore: [archiver (db)] Error from TOC entry 2043; 2606 16656 CONSTRAINT db_object_pkey postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  relation "public.db_object" does not exist
+    Command was: ALTER TABLE ONLY public.db_object DROP CONSTRAINT db_object_pkey;
+
+pg_restore: dropping CONSTRAINT alembic_version_pkc
+pg_restore: [archiver (db)] Error from TOC entry 2047; 2606 16727 CONSTRAINT alembic_version_pkc postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  relation "public.alembic_version" does not exist
+    Command was: ALTER TABLE ONLY public.alembic_version DROP CONSTRAINT alembic_version_pkc;
+
+pg_restore: dropping SEQUENCE SET user_id_seq
+pg_restore: dropping TABLE DATA user
+pg_restore: dropping SEQUENCE SET project_id_seq
+pg_restore: dropping TABLE DATA project
+pg_restore: dropping SEQUENCE SET db_object_id_seq
+pg_restore: dropping TABLE DATA db_object
+pg_restore: dropping TABLE DATA alembic_version
+pg_restore: dropping DEFAULT id
+pg_restore: [archiver (db)] Error from TOC entry 2035; 2604 16529 DEFAULT id postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  relation "public.user" does not exist
+    Command was: ALTER TABLE public."user" ALTER COLUMN id DROP DEFAULT;
+
+pg_restore: dropping DEFAULT id
+pg_restore: [archiver (db)] Error from TOC entry 2037; 2604 16697 DEFAULT id postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  relation "public.project" does not exist
+    Command was: ALTER TABLE public.project ALTER COLUMN id DROP DEFAULT;
+
+pg_restore: dropping DEFAULT id
+pg_restore: [archiver (db)] Error from TOC entry 2036; 2604 16651 DEFAULT id postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  relation "public.db_object" does not exist
+    Command was: ALTER TABLE public.db_object ALTER COLUMN id DROP DEFAULT;
+
+pg_restore: dropping SEQUENCE OWNED BY user_id_seq
+pg_restore: dropping SEQUENCE user_id_seq
+pg_restore: [archiver (db)] Error from TOC entry 181; 1259 16524 SEQUENCE user_id_seq postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  sequence "user_id_seq" does not exist
+    Command was: DROP SEQUENCE public.user_id_seq;
+
+pg_restore: dropping TABLE user
+pg_restore: [archiver (db)] Error from TOC entry 182; 1259 16526 TABLE user postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  table "user" does not exist
+    Command was: DROP TABLE public."user";
+
+pg_restore: dropping SEQUENCE OWNED BY project_id_seq
+pg_restore: dropping SEQUENCE project_id_seq
+pg_restore: [archiver (db)] Error from TOC entry 185; 1259 16692 SEQUENCE project_id_seq postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  sequence "project_id_seq" does not exist
+    Command was: DROP SEQUENCE public.project_id_seq;
+
+pg_restore: dropping TABLE project
+pg_restore: [archiver (db)] Error from TOC entry 186; 1259 16694 TABLE project postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  table "project" does not exist
+    Command was: DROP TABLE public.project;
+
+pg_restore: dropping SEQUENCE OWNED BY db_object_id_seq
+pg_restore: dropping SEQUENCE db_object_id_seq
+pg_restore: [archiver (db)] Error from TOC entry 183; 1259 16646 SEQUENCE db_object_id_seq postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  sequence "db_object_id_seq" does not exist
+    Command was: DROP SEQUENCE public.db_object_id_seq;
+
+pg_restore: dropping TABLE db_object
+pg_restore: [archiver (db)] Error from TOC entry 184; 1259 16648 TABLE db_object postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  table "db_object" does not exist
+    Command was: DROP TABLE public.db_object;
+
+pg_restore: dropping TABLE alembic_version
+pg_restore: [archiver (db)] Error from TOC entry 187; 1259 16723 TABLE alembic_version postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  table "alembic_version" does not exist
+    Command was: DROP TABLE public.alembic_version;
+
+pg_restore: dropping COMMENT EXTENSION plpgsql
+pg_restore: dropping EXTENSION plpgsql
+pg_restore: dropping COMMENT SCHEMA public
+pg_restore: dropping SCHEMA public
+pg_restore: dropping COMMENT DATABASE postgres
+pg_restore: creating COMMENT "DATABASE postgres"
+pg_restore: [archiver (db)] Error from TOC entry 2175; 0 0 COMMENT DATABASE postgres postgres
+pg_restore: [archiver (db)] could not execute query: ERROR:  must be owner of database postgres
+    Command was: COMMENT ON DATABASE postgres IS 'default administrative connection database';
+
+
+
+pg_restore: creating SCHEMA "public"
+pg_restore: creating COMMENT "SCHEMA public"
+pg_restore: creating EXTENSION "plpgsql"
+pg_restore: creating COMMENT "EXTENSION plpgsql"
+pg_restore: [archiver (db)] Error from TOC entry 2177; 0 0 COMMENT EXTENSION plpgsql 
+pg_restore: [archiver (db)] could not execute query: ERROR:  must be owner of extension plpgsql
+    Command was: COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+
+pg_restore: creating TABLE "public.alembic_version"
+pg_restore: creating TABLE "public.db_object"
+pg_restore: creating SEQUENCE "public.db_object_id_seq"
+pg_restore: creating SEQUENCE OWNED BY "public.db_object_id_seq"
+pg_restore: creating TABLE "public.project"
+pg_restore: creating SEQUENCE "public.project_id_seq"
+pg_restore: creating SEQUENCE OWNED BY "public.project_id_seq"
+pg_restore: creating TABLE "public.user"
+pg_restore: creating SEQUENCE "public.user_id_seq"
+pg_restore: creating SEQUENCE OWNED BY "public.user_id_seq"
+pg_restore: creating DEFAULT "public.id"
+pg_restore: creating DEFAULT "public.id"
+pg_restore: creating DEFAULT "public.id"
+pg_restore: processing data for table "public.alembic_version"
+pg_restore: processing data for table "public.db_object"
+pg_restore: executing SEQUENCE SET db_object_id_seq
+pg_restore: processing data for table "public.project"
+pg_restore: executing SEQUENCE SET project_id_seq
+pg_restore: processing data for table "public.user"
+pg_restore: executing SEQUENCE SET user_id_seq
+pg_restore: creating CONSTRAINT "public.alembic_version_pkc"
+pg_restore: creating CONSTRAINT "public.db_object_pkey"
+pg_restore: creating CONSTRAINT "public.project_pkey"
+pg_restore: creating CONSTRAINT "public.user_pkey"
+pg_restore: creating INDEX "public.ix_user_email"
+pg_restore: creating INDEX "public.ix_user_username"
+WARNING: errors ignored on restore: 18
+
+

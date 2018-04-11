@@ -2,9 +2,12 @@
 {% block app_content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-4"><a href="{{ url_for('edit_object', id=object_detail.id) }}">Edit</a></div>
-        <div class="col-md-4">&nbsp;</div>
-        <div class="col-md-4"><a href="{{ url_for('delete_object', id=object_detail.id) }}">Delete</a></div>
+            <div class="col-md-12">
+                <div class="col-md-4"><a href="{{ url_for('edit_project', id=project_detail.id) }}">Edit</a></div>
+                <div class="col-md-4">&nbsp;</div>
+                <div class="col-md-4"><a href="{{ url_for('delete_project', id=project_detail.id) }}">Delete</a></div>
+                <div class="col-md-4">&nbsp;</div>
+            </div>
     </div>
     <div class="row"><div class="col-md-12">&nbsp;</div></div>
 </div>
@@ -17,8 +20,7 @@
     <div class="row">
         <div class="col-md-12">
             <h3>Details for {{ object_detail.db_object }}</h3>
-            <h3>Project ID: {{ object_detail.project_id }} </h3>
-            <h3>Project Name: {{ object_detail.project_name }}</h3>
+            <h3>Project ID: {{ object_detail.pid }} - Object PID: {{ object_detail.Project_id }} - Project Name: {{ object_detail.project_name }}</h3>
             <div class="row"><div class="col-md-12">&nbsp;</div></div>
         </div>
     </div>

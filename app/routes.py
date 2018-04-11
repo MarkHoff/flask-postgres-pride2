@@ -56,21 +56,6 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-# @app.route('/user/<username>')
-# @login_required
-# def user(username):
-#     user = User.query.filter_by(username=username).first_or_404()
-#     page = request.args.get('page', 1, type=int)
-#     posts = user.posts.order_by(Post.timestamp.desc()).paginate(
-#         page, app.config['POSTS_PER_PAGE'], False)
-#     next_url = url_for('user', username=user.username, page=posts.next_num) \
-#         if posts.has_next else None
-#     prev_url = url_for('user', username=user.username, page=posts.prev_num) \
-#         if posts.has_prev else None
-#     return render_template('user.html', user=user, posts=posts.items,
-#                            next_url=next_url, prev_url=prev_url)
-
-
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
@@ -86,19 +71,6 @@ def edit_profile():
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile',
                            form=form)
-
-# @app.route('/explore')
-# @login_required
-# def explore():
-#     page = request.args.get('page', 1, type=int)
-#     posts = Post.query.order_by(Post.timestamp.desc()).paginate(
-#         page, app.config['POSTS_PER_PAGE'], False)
-#     next_url = url_for('explore', page=posts.next_num) \
-#         if posts.has_next else None
-#     prev_url = url_for('explore', page=posts.prev_num) \
-#         if posts.has_prev else None
-#     return render_template("index.html", title='Explore', posts=posts.items,
-#                           next_url=next_url, prev_url=prev_url)
 
 
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
@@ -166,16 +138,57 @@ def add_project():
 
 @app.route('/view_projects', methods=['GET'])
 def view_projects():
-    all_proj = Project.query.all()
+    # all_proj = Project.query.all().outerjoin(DbObject, Project.pid == DbObject.project_id)
+    all_proj = db.session.query(Project).outerjoin(DbObject, Project.pid == DbObject.project_id).all()
     return render_template('view_projects.html', title='View Projects', all_projects=all_proj)
 
 
 @app.route('/project_detail/<id>')
 def project_detail(id):
-    proj_detail = Project.query.filter_by(id=id).first_or_404()
+    # proj_detail = Project.query.filter_by(id=id).first_or_404()
+    proj_detail = db.session.query(Project).outerjoin(DbObject, Project.pid == DbObject.project_id).filter(Project.id == id).\
+        add_columns(
+        Project.id,
+        Project.pid,
+        Project.project_name,
+        Project.dev_lead,
+        Project.developers,
+        Project.release,
+        Project.pmt,
+        Project.sprint_schedule,
+        Project.lpm,
+        Project.pm,
+        Project.scrum_master,
+        Project.se,
+        Project.notes
+    ).first_or_404()
+    obj_detail = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).filter(
+        Project.id == id). \
+        add_columns(
+        DbObject.id,
+        DbObject.db_object,
+        DbObject.dm_seq
+        # DbObject.data_type,
+        # DbObject.schema,
+        # DbObject.db_object,
+        # DbObject.project_id,
+        # DbObject.frequency,
+        # DbObject.data_provider,
+        # DbObject.providing_system,
+        # DbObject.interface,
+        # DbObject.topic,
+        # DbObject.data_retention,
+        # DbObject.latency,
+        # DbObject.data_in_qa0,
+        # DbObject.row_count_per_period,
+        # DbObject.active_in_prod,
+        # DbObject.order_by,
+        # DbObject.segment_by,
+        # DbObject.special_notes
+    )
     return render_template('view_project_detail.html',
                            title='Project Detail',
-                           project_detail=proj_detail
+                           project_detail=proj_detail, object_detail = obj_detail
                            )
 
 
@@ -192,6 +205,17 @@ def edit_project(id):
             return render_template('edit_project_detail.html',
                             title='Edit Project',
                             form=form)
+
+
+@app.route('/delete_project/<id>', methods=['GET', 'POST'])
+def delete_project(id):
+    proj_id = db.session.query(Project).filter(Project.id == id).first_or_404()
+    db.session.delete(proj_id)
+    db.session.commit()
+    print("The object id is {} and the object name is {}".format(str(proj_id.id), str(proj_id.project_name)))
+    flash('Project ID {}, {} has been deleted'.format(str(proj_id.pid), str(proj_id.project_name)))
+    all_proj = Project.query.all()
+    return render_template('view_projects.html', title='View Projects', all_projects=all_proj)
 
 
 @app.route('/view_objects', methods=['GET'])
@@ -289,33 +313,6 @@ def object_detail(id):
     ).first_or_404()
     # print(obj_detail.project_id)
     return render_template('view_object_detail.html',title='Object Detail', object_detail=obj_detail)
-
-
-# @app.route('/search', methods=['GET', 'POST'])
-# def project_search():
-#     search = SearchForm(request.form)
-#     if request.method == 'POST':
-#         print('search data - ' + str(search.data['string_search']))
-#         return search_results(search.data)
-#     else:
-#         return render_template('search_form.html', form=search)
-#
-#
-# @app.route('/search_results')
-# def search_results(search):
-#         choices = search['choices']
-#         search_string = search['string_search']
-#         print('Choices - ' + str(choices))
-#         print('Search String - ' + str(search_string))
-#         if choices == 'PID':
-#             proj_list = Project.query.filter(Project.pid.like('%' + search_string + '%')).all()
-#         elif choices == 'Dev Lead':
-#             proj_list = Project.query.filter(Project.dev_lead.like('%' + search_string + '%')).all()
-#         elif choices == 'Developers':
-#             proj_list = Project.query.filter(Project.developers.like('%' + search_string + '%')).all()
-#
-#         print(proj_list)
-#         return render_template('view_projects.html', title='Search Results', all_projects=proj_list)
 
 
 @app.route('/search', methods=['GET', 'POST'])
