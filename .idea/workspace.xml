@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4fb2cb71-c8a6-4cae-bda4-3995e397e06e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/db_file_upload.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/templates/file_upload.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/forms.py" afterPath="$PROJECT_DIR$/app/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models.py" afterPath="$PROJECT_DIR$/app/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes.py" afterPath="$PROJECT_DIR$/app/routes.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/base.html" afterPath="$PROJECT_DIR$/app/templates/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/search_form.html" afterPath="$PROJECT_DIR$/app/templates/search_form.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/view_project_detail.html" afterPath="$PROJECT_DIR$/app/templates/view_project_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/view_projects.html" afterPath="$PROJECT_DIR$/app/templates/view_projects.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.py" afterPath="$PROJECT_DIR$/config.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log" afterPath="$PROJECT_DIR$/logs/pride2.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log.1" afterPath="$PROJECT_DIR$/logs/pride2.log.1" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log.2" afterPath="$PROJECT_DIR$/logs/pride2.log.2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log.3" afterPath="$PROJECT_DIR$/logs/pride2.log.3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log.4" afterPath="$PROJECT_DIR$/logs/pride2.log.4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -61,7 +45,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="476">
@@ -116,11 +100,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="config.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="23" lean-forward="false" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+            <state relative-caret-position="187">
+              <caret line="11" column="10" lean-forward="true" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -188,19 +172,19 @@
         <option value="$PROJECT_DIR$/app/forms.py" />
         <option value="$PROJECT_DIR$/app/models.py" />
         <option value="$PROJECT_DIR$/app/templates/view_projects.html" />
-        <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/app/templates/search_form.html" />
         <option value="$PROJECT_DIR$/app/templates/file_upload.html" />
         <option value="$PROJECT_DIR$/app/templates/db_file_upload.html" />
         <option value="$PROJECT_DIR$/app/templates/view_project_detail.html" />
         <option value="$PROJECT_DIR$/app/routes.py" />
         <option value="$PROJECT_DIR$/app/templates/base.html" />
+        <option value="$PROJECT_DIR$/config.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="155" />
-    <option name="y" value="336" />
+    <option name="y" value="117" />
     <option name="width" value="1525" />
     <option name="height" value="768" />
   </component>
@@ -238,12 +222,6 @@
               <item name="PythonFlaskVertica" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PythonFlaskVertica" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PythonFlaskVertica" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -291,7 +269,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="155" y="336" width="1525" height="768" extended-state="0" />
+    <frame x="155" y="117" width="1525" height="768" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24983607" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -654,14 +632,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="23" lean-forward="false" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/_project_detail.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -736,6 +706,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
           <caret line="28" column="60" lean-forward="false" selection-start-line="28" selection-start-column="60" selection-end-line="28" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="10" lean-forward="true" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
           <folding />
         </state>
       </provider>
