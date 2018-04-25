@@ -26,8 +26,10 @@
                     {% else %}
                     <li><a href="{{ url_for('view_projects') }}">View Projects</a></li>
                     <li><a href="{{ url_for('add_project') }}">Add Project</a></li>
+                    <li><a href="{{ url_for('upload_projfile') }}">Upload Project File</a></li>
                     <li><a href="{{ url_for('view_objects') }}">View Objects</a></li>
                     <li><a href="{{ url_for('add_object') }}">Add Object</a></li>
+                    <li><a href="{{ url_for('upload_objfile') }}">Upload Object File</a></li>
                     <li><a href="{{ url_for('logout') }}">Logout</a></li>
                     <li><a href="{{ url_for('search') }}"><span class="glyphicon glyphicon-search"></span></a></li>
                     {% endif %}

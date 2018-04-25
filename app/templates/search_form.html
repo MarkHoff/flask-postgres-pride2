@@ -2,20 +2,23 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Search</title>
-</head>
-<body>
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Search</title>-->
+<!--</head>-->
+<!--<body>-->
 <div class="container">
     <div class="row">
         <div class="col-md-4">
             <div class="container" style="border:1px solid #cecece;">
                 <div class="row"><div class="col-md-4">&nbsp;</div></div>
                     <h3>Project Search</h3>
-                    <p><span>Search Criteria</span></p>
                     <form action="/search" method="post" id="searchform">
+                        <label>Download to CSV File</label></br>
+                        <input name="download" type="checkbox" checked value="csv" unchecked>
+                        <input name="download" type="hidden" value="notcsv">
+                        <p><span>Search Criteria</span></p>
                         <select name="proj_choices" form="searchform">
                             <option selected="selected" value=""></option>
                             <option value="Release">Release</option>
@@ -54,6 +57,6 @@
     </div>
 </div>
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->
 {% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block app_content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="container" style="border:1px solid #cecece;">
+                <div class="row"><div class="col-md-4">&nbsp;</div></div>
+                    <h3>CSV Template File Upload</h3>
+                      <form action = "/obj_uploader" method = "POST"
+                         enctype = "multipart/form-data">
+                         <input type = "file" name = "file" />
+                        <div class="row"><div class="col-md-4">&nbsp;</div></div>
+                         <input type = "submit"/>
+                      </form>
+                        <div class="row"><div class="col-md-4">&nbsp;</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

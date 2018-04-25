@@ -135,7 +135,7 @@ class DbObject(db.Model):
 
 
     def __repr__(self):
-        return '<DbObject {}>'.format(self.body)
+        return '<DbObject {}, {}>'.format(self.id, self.dm_seq)
 
 @login.user_loader
 def load_user(id):

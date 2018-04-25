@@ -1,12 +1,15 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, send_file
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, \
-    ResetPasswordForm, ProjectForm, EditProjectForm, DbObjectForm, EditDbObjectForm, SearchForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, \
+    ResetPasswordForm, ProjectForm, EditProjectForm, DbObjectForm, EditDbObjectForm
 from app.email import send_password_reset_email
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Project, DbObject
 from werkzeug.urls import url_parse
 from datetime import datetime
+import csv
+import numpy as np
+import pandas as pd
 
 
 @app.before_request
@@ -138,14 +141,12 @@ def add_project():
 
 @app.route('/view_projects', methods=['GET'])
 def view_projects():
-    # all_proj = Project.query.all().outerjoin(DbObject, Project.pid == DbObject.project_id)
-    all_proj = db.session.query(Project).outerjoin(DbObject, Project.pid == DbObject.project_id).all()
+    all_proj = db.session.query(Project).outerjoin(DbObject, Project.pid == DbObject.project_id).order_by(Project.pid).all()
     return render_template('view_projects.html', title='View Projects', all_projects=all_proj)
 
 
 @app.route('/project_detail/<id>')
 def project_detail(id):
-    # proj_detail = Project.query.filter_by(id=id).first_or_404()
     proj_detail = db.session.query(Project).outerjoin(DbObject, Project.pid == DbObject.project_id).filter(Project.id == id).\
         add_columns(
         Project.id,
@@ -160,6 +161,9 @@ def project_detail(id):
         Project.pm,
         Project.scrum_master,
         Project.se,
+        Project.impact,
+        Project.readiness_status,
+        Project.deployment_cr,
         Project.notes
     ).first_or_404()
     obj_detail = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).filter(
@@ -168,23 +172,6 @@ def project_detail(id):
         DbObject.id,
         DbObject.db_object,
         DbObject.dm_seq
-        # DbObject.data_type,
-        # DbObject.schema,
-        # DbObject.db_object,
-        # DbObject.project_id,
-        # DbObject.frequency,
-        # DbObject.data_provider,
-        # DbObject.providing_system,
-        # DbObject.interface,
-        # DbObject.topic,
-        # DbObject.data_retention,
-        # DbObject.latency,
-        # DbObject.data_in_qa0,
-        # DbObject.row_count_per_period,
-        # DbObject.active_in_prod,
-        # DbObject.order_by,
-        # DbObject.segment_by,
-        # DbObject.special_notes
     )
     return render_template('view_project_detail.html',
                            title='Project Detail',
@@ -283,7 +270,6 @@ def delete_object(id):
 
 @app.route('/object_detail/<id>')
 def object_detail(id):
-    # obj_detail = db.session.query(DbObject).join(Project).filter(DbObject.id == id).first_or_404()
     obj_detail = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).filter(DbObject.id == id).\
         add_columns(
         Project.pid,
@@ -311,72 +297,466 @@ def object_detail(id):
         DbObject.segment_by,
         DbObject.special_notes
     ).first_or_404()
-    # print(obj_detail.project_id)
     return render_template('view_object_detail.html',title='Object Detail', object_detail=obj_detail)
+
+@app.route('/csv/', methods=['GET', 'POST'])
+def download_csv(proj_list):
+    filename = 'all_projects.csv'
+    all_proj = proj_list
+    csv_list = [['PID', 'PROJECT NAME', 'PMT', 'DEV LEAD', 'DEVELOPERS', 'RELEASE']]
+    for row in all_proj:
+        csv_list.append([row.pid, row.project_name, row.pmt, row.dev_lead, row.developers, row.release])
+    csv_list = np.asarray(csv_list)
+
+    csvList = pd.DataFrame(csv_list)
+    print(str(csvList))
+    csvList.to_csv(filename, header=False, sep='\t', index=False)
+    send_file(filename, as_attachment=True, mimetype='text/csv')
+    return filename
 
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
+
     if request.method == 'POST':
         proj_choice = request.form['proj_choices']
-        print(proj_choice)
         obj_choice = request.form['obj_choices']
-        print(obj_choice)
-        # print(search_string)
-
+        if request.form['download']:
+            download = request.form['download']
+        else: download =''
         if proj_choice != '':
             search_string = request.form['proj_search']
             if proj_choice == 'PID':
-                proj_list = Project.query.filter(Project.pid.like('%' + search_string + '%')).all()
+                search_item = 'pid'
+                proj_list = Project.query.order_by(Project.pid).filter(Project.pid.like('%' + search_string + '%')).all()
             elif proj_choice == 'Dev Lead':
-                proj_list = Project.query.filter(Project.dev_lead.like('%' + search_string + '%')).all()
+                search_item = 'dev_lead'
+                proj_list = Project.query.order_by(Project.pid).filter(Project.dev_lead.like('%' + search_string + '%')).all()
             elif proj_choice == 'Developer':
-                proj_list = Project.query.filter(Project.developers.like('%' + search_string + '%')).all()
+                search_item = 'developers'
+                proj_list = Project.query.order_by(Project.pid).filter(Project.developers.like('%' + search_string + '%')).all()
             elif proj_choice == 'Release':
-                proj_list = Project.query.filter(Project.release.like('%' + search_string + '%')).all()
-            return render_template('view_projects.html', title='Search Results', all_projects=proj_list)
+                search_item = 'release'
+                proj_list = Project.query.order_by(Project.pid).filter(Project.release.like('%' + search_string + '%')).all()
+            print(proj_list)
+            if download == 'csv':
+                csv_list = [['PID', 'PROJECT NAME', 'PMT', 'DEV LEAD', 'DEVELOPERS', 'RELEASE']]
+                filename = '/home/mark/PythonFlaskVertica/app/all_projects.csv'
+                for row in proj_list:
+                    csv_list.append([row.pid, row.project_name, row.pmt, row.dev_lead, row.developers, row.release])
+                csv_list = np.asarray(csv_list)
+                csvList = pd.DataFrame(csv_list)
+                csvList.to_csv(filename, header=False, sep='\t', index=False)
+                return send_file(filename, as_attachment=True, mimetype='text/csv')
+            else:
+                return render_template('view_projects.html', title='Search Results', all_projects=proj_list)
         elif obj_choice != '':
             search_string = request.form['obj_search']
             if obj_choice == 'Release':
-                # obj_list = DbObject.query.filter(DbObject.release.like('%' + search_string + '%')).all()
-                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).filter(
-                    Project.release.ilike ('%' + search_string + '%')).all()
+                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).order_by(Project.pid).filter(
+                    Project.release.ilike ('%' + search_string + '%')).\
+                            add_columns(
+                            Project.pid,
+                            Project.project_name,
+                            Project.dev_lead,
+                            Project.pmt,
+                            Project.developers,
+                            Project.release,
+                            DbObject.id,
+                            DbObject.dm_seq,
+                            DbObject.data_type,
+                            DbObject.schema,
+                            DbObject.db_object,
+                            DbObject.project_id,
+                            DbObject.frequency,
+                            DbObject.data_provider,
+                            DbObject.providing_system,
+                            DbObject.interface,
+                            DbObject.topic,
+                            DbObject.data_retention,
+                            DbObject.latency,
+                            DbObject.data_in_qa0,
+                            DbObject.row_count_per_period,
+                            DbObject.active_in_prod,
+                            DbObject.order_by,
+                            DbObject.segment_by,
+                            DbObject.special_notes
+                        ).all()
             elif obj_choice == 'Schema':
-                # obj_list = DbObject.query.filter(DbObject.schema.like('%' + search_string + '%')).all()
-                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).filter(
-                    DbObject.schema.ilike ('%' + search_string + '%')).all()
+                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).order_by(Project.pid).filter(
+                    DbObject.schema.ilike ('%' + search_string + '%')).\
+                            add_columns(
+                            Project.pid,
+                            Project.project_name,
+                            Project.dev_lead,
+                            Project.pmt,
+                            Project.developers,
+                            Project.release,
+                            DbObject.id,
+                            DbObject.dm_seq,
+                            DbObject.data_type,
+                            DbObject.schema,
+                            DbObject.db_object,
+                            DbObject.project_id,
+                            DbObject.frequency,
+                            DbObject.data_provider,
+                            DbObject.providing_system,
+                            DbObject.interface,
+                            DbObject.topic,
+                            DbObject.data_retention,
+                            DbObject.latency,
+                            DbObject.data_in_qa0,
+                            DbObject.row_count_per_period,
+                            DbObject.active_in_prod,
+                            DbObject.order_by,
+                            DbObject.segment_by,
+                            DbObject.special_notes
+                        ).all()
             elif obj_choice == 'Object Name':
-                # obj_list = DbObject.query.filter(DbObject.db_object.like('%' + search_string + '%')).all()
-                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).filter(
-                    DbObject.db_object.ilike ('%' + search_string + '%')).all()
+                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).order_by(Project.pid).filter(
+                    DbObject.db_object.ilike ('%' + search_string + '%')).\
+                            add_columns(
+                            Project.pid,
+                            Project.project_name,
+                            Project.dev_lead,
+                            Project.pmt,
+                            Project.developers,
+                            Project.release,
+                            DbObject.id,
+                            DbObject.dm_seq,
+                            DbObject.data_type,
+                            DbObject.schema,
+                            DbObject.db_object,
+                            DbObject.project_id,
+                            DbObject.frequency,
+                            DbObject.data_provider,
+                            DbObject.providing_system,
+                            DbObject.interface,
+                            DbObject.topic,
+                            DbObject.data_retention,
+                            DbObject.latency,
+                            DbObject.data_in_qa0,
+                            DbObject.row_count_per_period,
+                            DbObject.active_in_prod,
+                            DbObject.order_by,
+                            DbObject.segment_by,
+                            DbObject.special_notes
+                        ).all()
             elif obj_choice == 'Dev Lead':
-                # obj_list = DbObject.query.join(Project).filter(Project.dev_lead.like('%' + search_string + '%')).all()
-                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).filter(
-                    Project.dev_lead.ilike ('%' + search_string + '%')).all()
+                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).order_by(Project.pid).filter(
+                    Project.dev_lead.ilike ('%' + search_string + '%')).\
+                            add_columns(
+                            Project.pid,
+                            Project.project_name,
+                            Project.dev_lead,
+                            Project.pmt,
+                            Project.developers,
+                            Project.release,
+                            DbObject.id,
+                            DbObject.dm_seq,
+                            DbObject.data_type,
+                            DbObject.schema,
+                            DbObject.db_object,
+                            DbObject.project_id,
+                            DbObject.frequency,
+                            DbObject.data_provider,
+                            DbObject.providing_system,
+                            DbObject.interface,
+                            DbObject.topic,
+                            DbObject.data_retention,
+                            DbObject.latency,
+                            DbObject.data_in_qa0,
+                            DbObject.row_count_per_period,
+                            DbObject.active_in_prod,
+                            DbObject.order_by,
+                            DbObject.segment_by,
+                            DbObject.special_notes
+                        ).all()
             elif obj_choice == 'Developer':
-                # obj_list = DbObject.query.join(Project).filter(Project.developers.like('%' + search_string + '%')).all()
-                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).filter(
-                    Project.developers.ilike ('%' + search_string + '%')).all()
+                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).order_by(Project.pid).filter(
+                    Project.developers.ilike ('%' + search_string + '%')).\
+                            add_columns(
+                            Project.pid,
+                            Project.project_name,
+                            Project.dev_lead,
+                            Project.pmt,
+                            Project.developers,
+                            Project.release,
+                            DbObject.id,
+                            DbObject.dm_seq,
+                            DbObject.data_type,
+                            DbObject.schema,
+                            DbObject.db_object,
+                            DbObject.project_id,
+                            DbObject.frequency,
+                            DbObject.data_provider,
+                            DbObject.providing_system,
+                            DbObject.interface,
+                            DbObject.topic,
+                            DbObject.data_retention,
+                            DbObject.latency,
+                            DbObject.data_in_qa0,
+                            DbObject.row_count_per_period,
+                            DbObject.active_in_prod,
+                            DbObject.order_by,
+                            DbObject.segment_by,
+                            DbObject.special_notes
+                        ).all()
             elif obj_choice == 'PID':
-                # obj_list = DbObject.query.filter(DbObject.project_id.like('%' + search_string + '%')).all()
-                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).filter(
-                    DbObject.project_id.ilike ('%' + search_string + '%')).all()
+                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).order_by(Project.pid).filter(
+                    DbObject.project_id.ilike ('%' + search_string + '%')).\
+                            add_columns(
+                            Project.pid,
+                            Project.project_name,
+                            Project.dev_lead,
+                            Project.pmt,
+                            Project.developers,
+                            Project.release,
+                            DbObject.id,
+                            DbObject.dm_seq,
+                            DbObject.data_type,
+                            DbObject.schema,
+                            DbObject.db_object,
+                            DbObject.project_id,
+                            DbObject.frequency,
+                            DbObject.data_provider,
+                            DbObject.providing_system,
+                            DbObject.interface,
+                            DbObject.topic,
+                            DbObject.data_retention,
+                            DbObject.latency,
+                            DbObject.data_in_qa0,
+                            DbObject.row_count_per_period,
+                            DbObject.active_in_prod,
+                            DbObject.order_by,
+                            DbObject.segment_by,
+                            DbObject.special_notes
+                        ).all()
             elif obj_choice == 'DM Seq':
-                # obj_list = DbObject.query.filter(DbObject.dm_seq.like('%' + search_string + '%')).all()
-                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).filter(
-                    DbObject.dm_seq.ilike ('%' + search_string + '%')).all()
+                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).order_by(Project.pid).filter(
+                    DbObject.dm_seq.ilike ('%' + search_string + '%')).\
+                            add_columns(
+                            Project.pid,
+                            Project.project_name,
+                            Project.dev_lead,
+                            Project.pmt,
+                            Project.developers,
+                            Project.release,
+                            DbObject.id,
+                            DbObject.dm_seq,
+                            DbObject.data_type,
+                            DbObject.schema,
+                            DbObject.db_object,
+                            DbObject.project_id,
+                            DbObject.frequency,
+                            DbObject.data_provider,
+                            DbObject.providing_system,
+                            DbObject.interface,
+                            DbObject.topic,
+                            DbObject.data_retention,
+                            DbObject.latency,
+                            DbObject.data_in_qa0,
+                            DbObject.row_count_per_period,
+                            DbObject.active_in_prod,
+                            DbObject.order_by,
+                            DbObject.segment_by,
+                            DbObject.special_notes
+                        ).all()
             elif obj_choice == 'Topic':
-                # obj_list = DbObject.query.filter(DbObject.topic.like('%' + search_string + '%')).all()
-                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).filter(
-                    DbObject.topic.ilike ('%' + search_string + '%')).all()
+                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).order_by(Project.pid).filter(
+                    DbObject.topic.ilike ('%' + search_string + '%')).\
+                            add_columns(
+                            Project.pid,
+                            Project.project_name,
+                            Project.dev_lead,
+                            Project.pmt,
+                            Project.developers,
+                            Project.release,
+                            DbObject.id,
+                            DbObject.dm_seq,
+                            DbObject.data_type,
+                            DbObject.schema,
+                            DbObject.db_object,
+                            DbObject.project_id,
+                            DbObject.frequency,
+                            DbObject.data_provider,
+                            DbObject.providing_system,
+                            DbObject.interface,
+                            DbObject.topic,
+                            DbObject.data_retention,
+                            DbObject.latency,
+                            DbObject.data_in_qa0,
+                            DbObject.row_count_per_period,
+                            DbObject.active_in_prod,
+                            DbObject.order_by,
+                            DbObject.segment_by,
+                            DbObject.special_notes
+                        ).all()
             elif obj_choice == 'Interface':
-                # obj_list = DbObject.query.filter(DbObject.interface.like('%' + search_string + '%')).all()
-                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).filter(
-                    DbObject.interface.ilike ('%' + search_string + '%')).all()
-            return render_template('view_objects.html', title='Search Results', all_objects=obj_list)
-
+                obj_list = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).order_by(Project.pid).filter(
+                    DbObject.interface.ilike ('%' + search_string + '%')).\
+                            add_columns(
+                            Project.pid,
+                            Project.project_name,
+                            Project.dev_lead,
+                            Project.pmt,
+                            Project.developers,
+                            Project.release,
+                            DbObject.id,
+                            DbObject.dm_seq,
+                            DbObject.data_type,
+                            DbObject.schema,
+                            DbObject.db_object,
+                            DbObject.project_id,
+                            DbObject.frequency,
+                            DbObject.data_provider,
+                            DbObject.providing_system,
+                            DbObject.interface,
+                            DbObject.topic,
+                            DbObject.data_retention,
+                            DbObject.latency,
+                            DbObject.data_in_qa0,
+                            DbObject.row_count_per_period,
+                            DbObject.active_in_prod,
+                            DbObject.order_by,
+                            DbObject.segment_by,
+                            DbObject.special_notes
+                        ).all()
+            if download == 'csv':
+                csv_list = [['PID', 'PROJECT NAME', 'DEV LEAD', 'PMT', 'DEVELOPERS', 'RELEASE', 'DM SEQ',
+                             'DATA TYPE', 'SCHEMA', 'FREQUENCY', 'DATA PROVIDER', 'PROVIDING SYSTEM',
+                             'INTERFACE', 'TOPIC', 'DATA RETENTION', 'LATENCY', 'DATA IN QA0', 'ROW COUNT PER PERIOD',
+                             'ACTIVE IN PROD', 'ORDER BY ', 'SEGMENT BY']]
+                filename = '/home/mark/PythonFlaskVertica/app/all_objects.csv'
+                for row in obj_list:
+                    csv_list.append([row.db_object_project_id, row.db_object_project_name, row.db_object_dev_lead, row.db_object_pmt, row.db_object_developers,
+                                     row.db_object_release,
+                                     row.db_object_dm_seq, row.db_object_data_type, row.db_object_schema, row.db_object_frequency,
+                                     row.db_object_data_provider,
+                                     row.db_object_providing_system, row.db_object_interface, row.db_object_topic,
+                                     row.db_object_data_retention, row.db_object_latency,
+                                     row.db_object_data_in_qa0, row.db_object_row_count_per_period, row.db_object_active_in_prod,
+                                     row.db_object_order_by, row.db_object_segment_by ])
+                csv_list = np.asarray(csv_list)
+                csvList = pd.DataFrame(csv_list)
+                csvList.to_csv(filename, header=False, sep='\t', index=False)
+                return send_file(filename, as_attachment=True, mimetype='text/csv')
+            else:
+                return render_template('view_objects.html', title='Search Results', all_objects=obj_list)
     else:
         return render_template('search_form.html')
+
+
+# @app.route('/csv/', methods=['GET', 'POST'])
+# def download_csv(proj_list):
+#     all_proj = proj_list
+#     cwd = os.getcwd()
+#     filename = cwd + 'all_projects.csv'
+#     # all_proj = db.session.query(Project).outerjoin(DbObject, Project.pid == DbObject.project_id).all()
+#     # all_proj = proj_list
+#     csv_list = [['PID', 'PROJECT NAME', 'PMT', 'DEV LEAD', 'DEVELOPERS', 'RELEASE']]
+#     for row in all_proj:
+#         csv_list.append([row.pid, row.project_name, row.pmt, row.dev_lead, row.developers, row.release])
+#     csv_list = np.asarray(csv_list)
+#
+#     csvList = pd.DataFrame(csv_list)
+#     # csvList.to_csv('/home/mark/PythonFlaskVertica/app/all_projects.csv', header=False, sep='\t', index=False)
+#     csvList.to_csv(filename, header=False, sep='\t', index=False)
+#     return send_file(filename, as_attachment=True, mimetype='text/csv')
+#
+#
+
+# @app.route('/csv/', methods=['GET', 'POST'])
+# def download_csv():
+#     cwd = os.getcwd()
+#     filename = cwd + 'all_projects.csv'
+#     all_proj = db.session.query(Project).outerjoin(DbObject, Project.pid == DbObject.project_id).all()
+#     # all_proj = proj_list
+#     csv_list = [['PID', 'PROJECT NAME', 'PMT', 'DEV LEAD', 'DEVELOPERS','RELEASE']]
+#     for row in all_proj:
+#         csv_list.append([row.pid, row.project_name, row.pmt, row.dev_lead, row.developers, row.release])
+#     csv_list = np.asarray(csv_list)
+#
+#
+#     csvList = pd.DataFrame(csv_list)
+#     # csvList.to_csv('/home/mark/PythonFlaskVertica/app/all_projects.csv', header=False, sep='\t', index=False)
+#     csvList.to_csv(filename, header=False, sep='\t', index=False)
+#     return send_file(filename, as_attachment=True, mimetype='text/csv')
+
+    return render_template('upload.html')
+
+
+@app.route('/proj_uploader', methods=['GET', 'POST'])
+def upload_projfile():
+    if request.method == 'POST':
+        f = request.files['file']
+        f.save(f.filename)
+        with open(f.filename, 'r') as load_file:
+            readfile = csv.reader(load_file, delimiter='\t')
+            next(readfile) # headers
+            for line in readfile:
+                # print(line)
+                project = Project(
+                    project_name = line[0],
+                    pid = line[1],
+                    pmt = line[2],
+                    dev_lead = line[3],
+                    developers = line[4],
+                    release = line[5],
+                    sprint_schedule = line[6],
+                    lpm = line[7],
+                    pm = line[8],
+                    scrum_master = line[9],
+                    se = line[10],
+                    notes = line[11],
+                    impact = line[12],
+                    readiness_status = line[13],
+                    deployment_cr = line[14]
+                )
+                db.session.add(project)
+            db.session.commit()
+        flash('Your file has been uploaded successfully!')
+        return redirect(url_for('view_projects'))
+    else:
+        return render_template('file_upload.html')
+
+
+@app.route('/obj_uploader', methods=['GET', 'POST'])
+def upload_objfile():
+    if request.method == 'POST':
+        f = request.files['file']
+        f.save(f.filename)
+        with open(f.filename, 'r') as load_file:
+            readfile = csv.reader(load_file, delimiter='\t')
+            next(readfile) # headers
+            for line in readfile:
+                # print(line)
+                object = DbObject(
+                    project_id = line[0],
+                    dm_seq = line[1],
+                    data_type = line[2],
+                    schema = line[3],
+                    db_object = line[4],
+                    frequency = line[5],
+                    data_provider = line[6],
+                    providing_system = line[7],
+                    interface = line[8],
+                    topic = line[9],
+                    data_retention = line[10],
+                    latency = line[11],
+                    data_in_qa0 = line[12],
+                    row_count_per_period = line[13],
+                    active_in_prod = line[14],
+                    order_by = line[15],
+                    segment_by = line[16],
+                    special_notes = line[17]
+                )
+                db.session.add(object)
+            db.session.commit()
+        flash('Your file has been uploaded successfully!')
+        return redirect(url_for('view_objects'))
+    else:
+        return render_template('db_file_upload.html')
 
 
 @app.route('/logout')

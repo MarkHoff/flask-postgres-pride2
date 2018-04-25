@@ -1,11 +1,4 @@
-2018-04-11 15:08:07,377 ERROR: Exception on /favicon.ico [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
-Traceback (most recent call last):
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/util/_collections.py", line 999, in __call__
-    return self.registry[key]
-KeyError: 140052255217408
-
-During handling of the above exception, another exception occurred:
-
+2018-04-22 21:21:07,396 ERROR: Exception on /view_projects [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
 Traceback (most recent call last):
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -15,42 +8,46 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
     raise value
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1610, in full_dispatch_request
-    rv = self.preprocess_request()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1831, in preprocess_request
-    rv = func()
-  File "/home/mark/PythonFlaskVertica/app/routes.py", line 14, in before_request
-    if current_user.is_authenticated:
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/werkzeug/local.py", line 347, in __getattr__
-    return getattr(self._get_current_object(), name)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/werkzeug/local.py", line 306, in _get_current_object
-    return self.__local()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_login/utils.py", line 26, in <lambda>
-    current_user = LocalProxy(lambda: _get_user())
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_login/utils.py", line 335, in _get_user
-    current_app.login_manager._load_user()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_login/login_manager.py", line 359, in _load_user
-    return self.reload_user()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_login/login_manager.py", line 321, in reload_user
-    user = self.user_callback(user_id)
-  File "/home/mark/PythonFlaskVertica/app/models.py", line 142, in load_user
-    return User.query.get(int(id))
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py", line 514, in __get__
-    return type.query_class(mapper, session=self.sa.session())
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/scoping.py", line 74, in __call__
-    return self.registry()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/util/_collections.py", line 1001, in __call__
-    return self.registry.setdefault(key, self.createfunc())
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2939, in __call__
-    return self.class_(**local_kw)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py", line 143, in __init__
-    bind = options.pop('bind', None) or db.engine
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py", line 877, in engine
-    return self.get_engine()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py", line 896, in get_engine
-    return connector.get_engine()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py", line 556, in get_engine
-    self._sa.apply_driver_hacks(self._app, info, options)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py", line 830, in apply_driver_hacks
-    if info.drivername.startswith('mysql'):
-AttributeError: 'NoneType' object has no attribute 'drivername'
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 145, in view_projects
+    return render_template('view_projects.html', title='View Projects', all_projects=all_proj)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 134, in render_template
+    context, ctx.app)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 116, in _render
+    rv = template.render(context)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/home/mark/PythonFlaskVertica/app/templates/view_projects.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block "doc"
+    {%- block html %}
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block "html"
+    {% block body -%}
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 21, in block "body"
+    {% block navbar %}
+  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 29, in block "navbar"
+    <li><a href="{{ url_for('proj_uploader') }}">Upload Project File</a></li>
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/helpers.py", line 333, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1805, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/helpers.py", line 323, in url_for
+    force_external=external)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/werkzeug/routing.py", line 1776, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'proj_uploader'. Did you mean 'upload_objfile' instead?

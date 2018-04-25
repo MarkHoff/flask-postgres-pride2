@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, HiddenField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User
 
@@ -44,6 +44,8 @@ class EditProfileForm(FlaskForm):
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
                 raise ValidationError('Please use a different username.')
+
+
 
 class PostForm(FlaskForm):
     post = TextAreaField('Say something', validators=[
@@ -142,7 +144,12 @@ class ResetPasswordForm(FlaskForm):
     submit = SubmitField('Request Password Reset')
 
 
-class SearchForm(FlaskForm):
-    choices = StringField('Search Field', validators=[Length(min=0, max=100)])
-    string_search = StringField('Search Criteria', validators=[Length(min=0, max=100)])
-    submit = SubmitField('Submit')
+# class SearchForm(FlaskForm):
+#     choices = StringField('Search Field', validators=[Length(min=0, max=100)])
+#     string_search = StringField('Search Criteria', validators=[Length(min=0, max=100)])
+#     submit = SubmitField('Submit')
+
+
+class DownloadDataForm(FlaskForm):
+    proj_list = HiddenField()
+    submit = SubmitField('Download')

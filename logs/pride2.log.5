@@ -1,3 +1,26 @@
+2018-04-22 15:02:08,683 ERROR: Exception on /view_projects [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 144, in view_projects
+    all_proj = db.session.query(Project).outerjoin(DbObject, Project.pid == DbObject.project_id).all().order_by(Project.pid)
+AttributeError: 'list' object has no attribute 'order_by'
+2018-04-22 15:04:03,494 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-04-22 15:04:03,495 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-04-22 15:04:03,495 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-04-22 15:22:05,581 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-04-22 15:22:05,582 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-04-22 15:22:05,582 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
 2018-04-22 15:22:38,395 ERROR: Exception on /uploader [POST] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
 Traceback (most recent call last):
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1193, in _execute_context
@@ -70,21 +93,3 @@ Traceback (most recent call last):
     cursor.execute(statement, parameters)
 sqlalchemy.exc.DataError: (psycopg2.DataError) value too long for type character varying(100)
  [SQL: 'INSERT INTO project (project_name, pid, pmt, dev_lead, developers, release, sprint_schedule, lpm, pm, scrum_master, se, notes, impact, readiness_status, deployment_cr) VALUES (%(project_name)s, %(pid)s, %(pmt)s, %(dev_lead)s, %(developers)s, %(release)s, %(sprint_schedule)s, %(lpm)s, %(pm)s, %(scrum_master)s, %(se)s, %(notes)s, %(impact)s, %(readiness_status)s, %(deployment_cr)s) RETURNING project.id'] [parameters: {'project_name': 'Enhanced Mobile (R2b) - Frictionless Automation XSP Support', 'pid': '295511A', 'pmt': '466585', 'dev_lead': 'Eric', 'developers': 'Alan (DM, EE)', 'release': '1712', 'sprint_schedule': '', 'lpm': 'Kim De La Guerrigue', 'pm': 'Jane Eisenmann (je3134)', 'scrum_master': 'Jane Eisenmann (je3134)', 'se': 'June Shi (ys1362), Cho Wong (cw1728)', 'notes': '10/17: Still no funding.  Cho is trying to get funding for 1712 or 1802.  ', 'impact': 'On Hold', 'readiness_status': 'Project is on hold.  This project is test only for VETL/Vertica so there is NOTHING to deploy.  We just need to validate that files are provided and loading as expected.', 'deployment_cr': 'CHG000004300747'}] (Background on this error at: http://sqlalche.me/e/9h9h)
-2018-04-22 20:12:13,566 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
-2018-04-22 20:12:13,567 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:12:13,567 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:16:24,305 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
-2018-04-22 20:16:24,307 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:16:24,307 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:38:17,587 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
-2018-04-22 20:38:17,589 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:38:17,589 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:51:03,758 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
-2018-04-22 20:51:03,759 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:51:03,759 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:54:08,513 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
-2018-04-22 20:54:08,514 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:54:08,514 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 21:20:36,864 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
-2018-04-22 21:20:36,865 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 21:20:36,865 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]

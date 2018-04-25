@@ -1,0 +1,122 @@
+2018-04-20 13:43:48,778 ERROR: Exception on /uploader [POST] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 1772, in add
+    state = attributes.instance_state(instance)
+AttributeError: type object 'Project' has no attribute '_sa_instance_state'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 724, in upload_file
+    db.session.add(Project)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/scoping.py", line 153, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 1774, in add
+    raise exc.UnmappedInstanceError(instance)
+sqlalchemy.orm.exc.UnmappedInstanceError: Class 'flask_sqlalchemy.model.DefaultMeta' is not mapped; was a class (app.models.Project) supplied where an instance was required?
+2018-04-20 14:58:34,750 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-04-20 14:58:34,750 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-04-20 14:58:34,750 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-04-20 14:58:46,467 ERROR: Exception on /uploader [POST] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 724, in upload_file
+    myobject = Project(line)
+TypeError: __init__() takes 1 positional argument but 2 were given
+2018-04-20 14:58:46,467 ERROR: Exception on /uploader [POST] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 724, in upload_file
+    myobject = Project(line)
+TypeError: __init__() takes 1 positional argument but 2 were given
+2018-04-20 14:59:49,292 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-04-20 14:59:49,293 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-04-20 14:59:49,293 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-04-20 14:59:56,574 ERROR: Exception on /uploader [POST] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 724, in upload_file
+    myobject = Project(line[0])
+TypeError: __init__() takes 1 positional argument but 2 were given
+2018-04-20 14:59:56,574 ERROR: Exception on /uploader [POST] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 724, in upload_file
+    myobject = Project(line[0])
+TypeError: __init__() takes 1 positional argument but 2 were given
+2018-04-20 15:07:07,699 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-04-20 15:07:07,700 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-04-20 15:07:07,700 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-04-20 15:07:15,083 ERROR: Exception on /uploader [POST] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 723, in upload_file
+    line = Project(line)
+TypeError: __init__() takes 1 positional argument but 2 were given

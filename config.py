@@ -22,3 +22,4 @@ class Config(object):
     POSTS_PER_PAGE = 25
     LANGUAGES =  ['en', 'es']
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
+    UPLOAD_FOLDER = '/home/mark/PythonFlaskVertica'
