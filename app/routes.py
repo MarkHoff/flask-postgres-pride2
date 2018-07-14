@@ -1,10 +1,11 @@
 from flask import render_template, flash, redirect, url_for, request, send_file
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, \
-    ResetPasswordForm, ProjectForm, EditProjectForm, DbObjectForm, EditDbObjectForm
+    ResetPasswordForm, ProjectForm, EditProjectForm, DbObjectForm, EditDbObjectForm, StoryForm, \
+    EditStoryForm, TaskForm, EditTaskForm
 from app.email import send_password_reset_email
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Project, DbObject
+from app.models import User, Project, DbObject, Task, UserStory
 from werkzeug.urls import url_parse
 from datetime import datetime
 import csv
@@ -126,7 +127,7 @@ def add_project():
                           )
         db.session.add(project)
         db.session.commit()
-        flash('Your project has been posted!')
+        flash('Your project has been saved')
         return redirect(url_for('view_projects'))
     all_proj = Project.query.all()
     # page = request.args.get('page', 1, type=int)
@@ -164,7 +165,13 @@ def project_detail(id):
         Project.impact,
         Project.readiness_status,
         Project.deployment_cr,
-        Project.notes
+        Project.notes,
+        # Project.user_story_id,
+        # Project.user_story_desc,
+        # Project.user_story_name,
+        # Project.task_id,
+        # Project.task_name,
+        # Project.task_desc
     ).first_or_404()
     obj_detail = db.session.query(DbObject).outerjoin(Project, Project.pid == DbObject.project_id).filter(
         Project.id == id). \
@@ -173,9 +180,25 @@ def project_detail(id):
         DbObject.db_object,
         DbObject.dm_seq
     )
+    us_detail = db.session.query(UserStory).outerjoin(Project, Project.pid == UserStory.project_id). \
+        filter(Project.id == id). \
+        add_columns(
+        UserStory.id,
+        UserStory.user_story_id,
+        UserStory.user_story_name,
+        UserStory.user_story_desc,
+        UserStory.sprint,
+        UserStory.points,
+        UserStory.size,
+        UserStory.epic,
+        UserStory.story_notes
+
+    )
     return render_template('view_project_detail.html',
                            title='Project Detail',
-                           project_detail=proj_detail, object_detail = obj_detail
+                           project_detail=proj_detail,
+                           object_detail= obj_detail,
+                           us_detail = us_detail
                            )
 
 
@@ -298,6 +321,166 @@ def object_detail(id):
         DbObject.special_notes
     ).first_or_404()
     return render_template('view_object_detail.html',title='Object Detail', object_detail=obj_detail)
+
+
+@app.route('/view_stories', methods = ['GET'])
+def view_stories():
+    all_stories = db.session.query(UserStory).order_by(UserStory.user_story_id).all()
+    return render_template('view_stories.html', title='View Stories', all_stories = all_stories)
+
+
+@app.route('/add_story', methods=['GET', 'POST'])
+def add_story():
+    form = StoryForm()
+    if form.validate_on_submit():
+        story = UserStory(
+            user_story_id = form.user_story_id.data,
+            dev_lead = form.dev_lead.data,
+            developers = form.developers.data,
+            sprint = form.sprint.data,
+            points = form.points.data,
+            size = form.size.data,
+            epic = form.epic.data,
+            story_notes = form.story_notes.data,
+            user_story_desc = form.user_story_desc.data,
+            user_story_name = form.user_story_name.data,
+            project_id = form.project_id.data,
+            project_name = form.project_name.data
+        )
+        db.session.add(story)
+        db.session.commit()
+        flash('Your story has been saved')
+        return redirect(url_for('view_projects'))
+    return render_template('story.html', title='Add Story', form=form)
+
+
+@app.route('/edit_story/<id>', methods=['GET', 'POST'])
+def edit_story(id):
+    story_id = UserStory.query.get(id)
+    form = EditStoryForm(formdata=request.form, obj=story_id)
+    if form.validate_on_submit():
+        form.populate_obj(story_id)
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('view_stories'))
+    elif request.method == 'GET':
+            return render_template('edit_story_detail.html',
+                                    title='Edit Story',
+                                    form=form)
+
+
+@app.route('/delete_story/<id>', methods=['GET', 'POST'])
+def delete_story(id):
+    story_id = db.session.query(UserStory).filter(UserStory.id == id).first_or_404()
+    db.session.delete(story_id)
+    db.session.commit()
+    print("The story id is {} and the story name is {}".format(str(story_id.id), str(story_id.user_story_name)))
+    flash('User Story id no. {}, {} has been deleted'.format(str(story_id.id), str(story_id.user_story_name)))
+    all_stories = UserStory.query.all()
+    return render_template('view_stories.html', title='View Stories', all_stories=all_stories)
+
+
+@app.route('/story_detail/<id>')
+def story_detail(id):
+    story_detail = db.session.query(UserStory).outerjoin(Project, Project.pid == UserStory.project_id).filter(UserStory.id == id).\
+        add_columns(
+        Project.pid,
+        Project.project_name,
+        Project.dev_lead,
+        Project.developers,
+        Project.release,
+        UserStory.id,
+        UserStory.project_id,
+        UserStory.user_story_id,
+        UserStory.user_story_name,
+        UserStory.user_story_desc,
+        UserStory.dev_lead,
+        UserStory.developers,
+        UserStory.sprint,
+        UserStory.size,
+        UserStory.points,
+        UserStory.epic,
+        UserStory.story_notes
+    ).first_or_404()
+    return render_template('view_story_detail.html',title='User Story Detail', story_detail=story_detail)
+
+
+@app.route('/view_tasks', methods = ['GET'])
+def view_tasks():
+    all_tasks = db.session.query(Task).order_by(Task.task_id).all()
+    return render_template('view_tasks.html', title='View Tasks', all_tasks = all_tasks)
+
+
+@app.route('/add_task', methods=['GET', 'POST'])
+def add_task():
+    form = TaskForm()
+    if form.validate_on_submit():
+        task = Task(
+            task_id = form.user_story_id.data,
+            dev_lead = form.dev_lead.data,
+            developers = form.developers.data,
+            sprint = form.sprint.data,
+            task_name = form.task_name.data,
+            task_desc = form.task_desc.data,
+            task_hours = form.task_hours.data,
+            task_notes = form.task_notes.data,
+            user_story_id = form.user_story_id.data,
+            project_id = form.project_id.data,
+        )
+        db.session.add(task)
+        db.session.commit()
+        flash('Your task has been saved')
+        return redirect(url_for('view_tasks'))
+    return render_template('task.html', title='Add Task', form=form)
+
+
+@app.route('/edit_task/<id>', methods=['GET', 'POST'])
+def edit_task(id):
+    task_id = Task.query.get(id)
+    form = EditTaskForm(formdata=request.form, obj=task_id)
+    if form.validate_on_submit():
+        form.populate_obj(task_id)
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('view_tasks'))
+    elif request.method == 'GET':
+            return render_template('edit_task_detail.html',
+                                    title='Edit Task',
+                                    form=form)
+
+
+@app.route('/delete_task/<id>', methods=['GET', 'POST'])
+def delete_task(id):
+    task_id = db.session.query(Task).filter(Task.id == id).first_or_404()
+    db.session.delete(task_id)
+    db.session.commit()
+    print("The task id is {} and the task name is {}".format(str(task_id.id), str(task_id.task_name)))
+    flash('Task id no. {}, {} has been deleted'.format(str(task_id.id), str(task_id.task_name)))
+    all_tasks = Task.query.all()
+    return render_template('view_tasks.html', title='View Tasks', all_tasks=all_tasks)
+
+
+@app.route('/task_detail/<id>')
+def task_detail(id):
+    task_detail = db.session.query(Task).outerjoin(UserStory, UserStory.user_story_id == Task.user_story_id).\
+        outerjoin(Project, Project.pid == UserStory.project_id).filter(Task.id == id).\
+        add_columns(
+        Project.pid,
+        Project.project_name,
+        UserStory.id,
+        UserStory.user_story_id,
+        UserStory.user_story_name,
+        Task.task_id,
+        Task.task_name,
+        Task.dev_lead,
+        Task.developers,
+        Task.sprint,
+        Task.task_desc,
+        Task.task_hours,
+        Task.task_notes
+    ).first_or_404()
+    return render_template('view_task_detail.html',title='Task Detail', task_detail=task_detail)
+
 
 @app.route('/csv/', methods=['GET', 'POST'])
 def download_csv(proj_list):
@@ -646,42 +829,6 @@ def search():
     else:
         return render_template('search_form.html')
 
-
-# @app.route('/csv/', methods=['GET', 'POST'])
-# def download_csv(proj_list):
-#     all_proj = proj_list
-#     cwd = os.getcwd()
-#     filename = cwd + 'all_projects.csv'
-#     # all_proj = db.session.query(Project).outerjoin(DbObject, Project.pid == DbObject.project_id).all()
-#     # all_proj = proj_list
-#     csv_list = [['PID', 'PROJECT NAME', 'PMT', 'DEV LEAD', 'DEVELOPERS', 'RELEASE']]
-#     for row in all_proj:
-#         csv_list.append([row.pid, row.project_name, row.pmt, row.dev_lead, row.developers, row.release])
-#     csv_list = np.asarray(csv_list)
-#
-#     csvList = pd.DataFrame(csv_list)
-#     # csvList.to_csv('/home/mark/PythonFlaskVertica/app/all_projects.csv', header=False, sep='\t', index=False)
-#     csvList.to_csv(filename, header=False, sep='\t', index=False)
-#     return send_file(filename, as_attachment=True, mimetype='text/csv')
-#
-#
-
-# @app.route('/csv/', methods=['GET', 'POST'])
-# def download_csv():
-#     cwd = os.getcwd()
-#     filename = cwd + 'all_projects.csv'
-#     all_proj = db.session.query(Project).outerjoin(DbObject, Project.pid == DbObject.project_id).all()
-#     # all_proj = proj_list
-#     csv_list = [['PID', 'PROJECT NAME', 'PMT', 'DEV LEAD', 'DEVELOPERS','RELEASE']]
-#     for row in all_proj:
-#         csv_list.append([row.pid, row.project_name, row.pmt, row.dev_lead, row.developers, row.release])
-#     csv_list = np.asarray(csv_list)
-#
-#
-#     csvList = pd.DataFrame(csv_list)
-#     # csvList.to_csv('/home/mark/PythonFlaskVertica/app/all_projects.csv', header=False, sep='\t', index=False)
-#     csvList.to_csv(filename, header=False, sep='\t', index=False)
-#     return send_file(filename, as_attachment=True, mimetype='text/csv')
 
     return render_template('upload.html')
 

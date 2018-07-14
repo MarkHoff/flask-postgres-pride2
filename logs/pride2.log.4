@@ -1,14 +1,4 @@
-2018-04-22 15:22:38,395 ERROR: Exception on /uploader [POST] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
-Traceback (most recent call last):
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1193, in _execute_context
-    context)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 507, in do_execute
-    cursor.execute(statement, parameters)
-psycopg2.DataError: value too long for type character varying(100)
-
-
-The above exception was the direct cause of the following exception:
-
+2018-07-08 11:13:57,183 ERROR: Exception on /view_stories [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
 Traceback (most recent call last):
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -22,69 +12,93 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/mark/PythonFlaskVertica/app/routes.py", line 717, in upload_file
-    db.session.commit()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/scoping.py", line 153, in do
-    return getattr(self.registry(), name)(*args, **kwargs)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 943, in commit
-    self.transaction.commit()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 467, in commit
-    self._prepare_impl()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 447, in _prepare_impl
-    self.session.flush()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2243, in flush
-    self._flush(objects)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2369, in _flush
-    transaction.rollback(_capture_exception=True)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/util/langhelpers.py", line 66, in __exit__
-    compat.reraise(exc_type, exc_value, exc_tb)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 187, in reraise
-    raise value
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2333, in _flush
-    flush_context.execute()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/unitofwork.py", line 391, in execute
-    rec.execute(self)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/unitofwork.py", line 556, in execute
-    uow
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/persistence.py", line 181, in save_obj
-    mapper, table, insert)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/orm/persistence.py", line 866, in _emit_insert_statements
-    execute(statement, params)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 948, in execute
-    return meth(self, multiparams, params)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/sql/elements.py", line 269, in _execute_on_connection
-    return connection._execute_clauseelement(self, multiparams, params)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1060, in _execute_clauseelement
-    compiled_sql, distilled_params
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1200, in _execute_context
-    context)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1413, in _handle_dbapi_exception
-    exc_info
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 203, in raise_from_cause
-    reraise(type(exception), exception, tb=exc_tb, cause=cause)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 186, in reraise
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 328, in view_stories
+    return render_template('view_stories.html', title='View Stories', all_stories = all_stories)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 134, in render_template
+    context, ctx.app)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 116, in _render
+    rv = template.render(context)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1193, in _execute_context
-    context)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 507, in do_execute
-    cursor.execute(statement, parameters)
-sqlalchemy.exc.DataError: (psycopg2.DataError) value too long for type character varying(100)
- [SQL: 'INSERT INTO project (project_name, pid, pmt, dev_lead, developers, release, sprint_schedule, lpm, pm, scrum_master, se, notes, impact, readiness_status, deployment_cr) VALUES (%(project_name)s, %(pid)s, %(pmt)s, %(dev_lead)s, %(developers)s, %(release)s, %(sprint_schedule)s, %(lpm)s, %(pm)s, %(scrum_master)s, %(se)s, %(notes)s, %(impact)s, %(readiness_status)s, %(deployment_cr)s) RETURNING project.id'] [parameters: {'project_name': 'Enhanced Mobile (R2b) - Frictionless Automation XSP Support', 'pid': '295511A', 'pmt': '466585', 'dev_lead': 'Eric', 'developers': 'Alan (DM, EE)', 'release': '1712', 'sprint_schedule': '', 'lpm': 'Kim De La Guerrigue', 'pm': 'Jane Eisenmann (je3134)', 'scrum_master': 'Jane Eisenmann (je3134)', 'se': 'June Shi (ys1362), Cho Wong (cw1728)', 'notes': '10/17: Still no funding.  Cho is trying to get funding for 1712 or 1802.  ', 'impact': 'On Hold', 'readiness_status': 'Project is on hold.  This project is test only for VETL/Vertica so there is NOTHING to deploy.  We just need to validate that files are provided and loading as expected.', 'deployment_cr': 'CHG000004300747'}] (Background on this error at: http://sqlalche.me/e/9h9h)
-2018-04-22 20:12:13,566 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
-2018-04-22 20:12:13,567 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:12:13,567 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:16:24,305 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
-2018-04-22 20:16:24,307 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:16:24,307 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:38:17,587 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
-2018-04-22 20:38:17,589 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:38:17,589 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:51:03,758 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
-2018-04-22 20:51:03,759 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:51:03,759 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:54:08,513 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
-2018-04-22 20:54:08,514 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 20:54:08,514 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 21:20:36,864 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
-2018-04-22 21:20:36,865 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
-2018-04-22 21:20:36,865 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+  File "/home/mark/PythonFlaskVertica/app/templates/view_stories.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block "doc"
+    {%- block html %}
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block "html"
+    {% block body -%}
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 23, in block "body"
+    {% block content -%}
+  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 54, in block "content"
+    {% block app_content %}{% endblock %}
+  File "/home/mark/PythonFlaskVertica/app/templates/view_stories.html", line 11, in block "app_content"
+    {% include '_stories.html' %}
+  File "/home/mark/PythonFlaskVertica/app/templates/_stories.html", line 2, in top-level template code
+    <div class="col-xs-2"><a href="{{ url_for('story_detail', id=story_detail.id) }}">
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 430, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'story_detail' is undefined
+2018-07-08 11:19:48,942 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-07-08 11:19:48,943 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-07-08 11:19:48,943 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-07-08 12:23:29,452 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-07-08 12:23:29,453 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-07-08 12:23:29,453 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-07-08 12:30:12,873 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-07-08 12:30:12,873 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-07-08 12:30:12,873 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-07-08 12:34:20,383 ERROR: Exception on /delete_story/6 [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 378, in delete_story
+    print("The object id is {} and the object name is {}".format(str(story_id.id), str(story_id.user_story)))
+AttributeError: 'UserStory' object has no attribute 'user_story'
+2018-07-08 12:34:20,383 ERROR: Exception on /delete_story/6 [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 378, in delete_story
+    print("The object id is {} and the object name is {}".format(str(story_id.id), str(story_id.user_story)))
+AttributeError: 'UserStory' object has no attribute 'user_story'
+2018-07-08 12:37:10,181 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-07-08 12:37:10,182 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-07-08 12:37:10,182 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-07-11 21:04:08,545 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-07-11 21:04:08,546 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-07-11 21:04:08,546 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-07-11 21:18:26,303 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-07-11 21:18:26,304 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-07-11 21:18:26,304 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-07-11 21:19:38,345 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:49]
+2018-07-11 21:19:38,345 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]
+2018-07-11 21:19:38,345 INFO: Pride2 startup [in /home/mark/PythonFlaskVertica/app/__init__.py:67]

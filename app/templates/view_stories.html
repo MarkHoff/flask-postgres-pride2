@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block app_content %}
+    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+    <div class="row" style="display:flex;  flex-wrap: wrap;">
+        <div class="col-xs-2"><strong>Story ID</strong></div>
+        <div class="col-xs-2"><strong>Story Name</strong></div>
+        <div class="col-xs-2"><strong>Project ID</strong></div>
+        <div class="col-xs-2"><strong>Dev Lead</strong></div>
+    </div>
+    {% for story in all_stories %}
+        {% include '_stories.html' %}
+    {% endfor %}
+{% endblock %}

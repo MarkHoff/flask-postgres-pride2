@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, HiddenField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, HiddenField, IntegerField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, Length
 from app.models import User
 
@@ -129,6 +129,66 @@ class EditDbObjectForm(FlaskForm):
     segment_by = StringField('Segment By', validators=[Length(min=0, max=100)])
     project_id = StringField('Project ID', validators=[Length(min=0, max=100)])
     special_notes = TextAreaField('Special Notes', validators=[Length(min=0, max=1000)])
+    submit = SubmitField('Submit')
+
+
+class StoryForm(FlaskForm):
+    user_story_id = StringField('Story ID', validators=[Length(min=0, max=100)])
+    dev_lead = StringField('Dev Lead', validators=[Length(min=0, max=100)])
+    developers = StringField('Developers', validators=[Length(min=0, max=100)])
+    sprint = StringField('Sprint', validators=[Length(min=0, max=300)])
+    points = StringField('Points', validators=[Length(min=0, max=10)])
+    size = StringField('Size', validators=[Length(min=0, max=10)])
+    epic = StringField('Epic', validators=[Length(min=0, max=20)])
+    story_notes = TextAreaField('Notes', validators=[Length(min=0, max=3000)])
+    user_story_desc = TextAreaField('Description', validators=[Length(min=0, max=3000)])
+    user_story_name = StringField('Story Name', validators=[Length(min=0, max=100)])
+    project_id = StringField('Project ID', validators=[Length(min=0, max=100)])
+    project_name = StringField('Project Name', validators=[Length(min=0, max=100)])
+    submit = SubmitField('Submit')
+
+
+class EditStoryForm(FlaskForm):
+    user_story_id = StringField('Story ID', validators=[Length(min=0, max=100)])
+    dev_lead = StringField('Dev Lead', validators=[Length(min=0, max=100)])
+    developers = StringField('Developers', validators=[Length(min=0, max=100)])
+    sprint = StringField('Sprint', validators=[Length(min=0, max=300)])
+    points = StringField('Points', validators=[Length(min=0, max=10)])
+    size = StringField('Size', validators=[Length(min=0, max=10)])
+    epic = StringField('Epic', validators=[Length(min=0, max=20)])
+    story_notes = TextAreaField('Notes', validators=[Length(min=0, max=3000)])
+    user_story_desc = TextAreaField('Description', validators=[Length(min=0, max=3000)])
+    user_story_name = StringField('Story Name', validators=[Length(min=0, max=100)])
+    project_id = StringField('Project ID', validators=[Length(min=0, max=100)])
+    project_name = StringField('Project Name', validators=[Length(min=0, max=100)])
+    submit = SubmitField('Submit')
+
+
+class TaskForm(FlaskForm):
+    task_id = StringField('Task ID', validators=[Length(min=0, max=100)])
+    dev_lead = StringField('Dev Lead', validators=[Length(min=0, max=100)])
+    developers = StringField('Developers', validators=[Length(min=0, max=100)])
+    sprint = StringField('Sprint', validators=[Length(min=0, max=300)])
+    task_name = StringField('Task Name', validators=[Length(min=0, max=100)])
+    task_desc = StringField('Task Desc', validators=[Length(min=0, max=1000)])
+    task_hours = IntegerField('Task Hours')
+    task_notes = TextAreaField('Notes', validators=[Length(min=0, max=2000)])
+    user_story_id = StringField('Story ID', validators=[Length(min=0, max=100)])
+    project_id = StringField('Project ID', validators=[Length(min=0, max=100)])
+    submit = SubmitField('Submit')
+
+
+class EditTaskForm(FlaskForm):
+    task_id = StringField('Task ID', validators=[Length(min=0, max=100)])
+    dev_lead = StringField('Dev Lead', validators=[Length(min=0, max=100)])
+    developers = StringField('Developers', validators=[Length(min=0, max=100)])
+    sprint = StringField('Sprint', validators=[Length(min=0, max=300)])
+    task_name = StringField('Task Name', validators=[Length(min=0, max=100)])
+    task_desc = StringField('Task Desc', validators=[Length(min=0, max=1000)])
+    task_hours = IntegerField('Task Hours')
+    task_notes = TextAreaField('Notes', validators=[Length(min=0, max=2000)])
+    user_story_id = StringField('Story ID', validators=[Length(min=0, max=100)])
+    project_id = StringField('Project ID', validators=[Length(min=0, max=100)])
     submit = SubmitField('Submit')
 
 

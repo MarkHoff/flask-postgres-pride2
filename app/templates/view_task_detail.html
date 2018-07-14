@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block app_content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"><a href="{{ url_for('edit_task', id=task_detail.id) }}">Edit</a></div>
+        <div class="col-md-4">&nbsp;</div>
+        <div class="col-md-4"><a href="{{ url_for('delete_task', id=task_detail.id) }}">Delete</a></div>
+    </div>
+    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+</div>
+<div class="container" style="border:1px solid #cecece;">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="delete"></form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Details for {{ task_detail.task_id }} - {{ task_detail.task_name }} </h3>
+            <h3>User Story ID: {{ task_detail.user_story_id }} </h3>
+            <h3>User Story Name: {{ task_detail.user_story_name }}</h3>
+            <div class="row"><div class="col-md-12">&nbsp;</div></div>
+        </div>
+    </div>
+    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-xs-3"><strong>Dev Lead: </strong> {{ task_detail.dev_lead }}</div>
+            <div class="col-xs-3"><strong>Developers: </strong>{{ task_detail.developers }}</div>
+            <div class="col-xs-3"><strong>Sprint: </strong> {{ task_detail.sprint }}</div>
+        </div>
+    </div>
+    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+</div>
+    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+<div class="container" style="border:1px solid #cecece;">
+    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-xs-3"><strong>Description: </strong> {{ task_detail.task_desc }}</div>
+            <div class="col-xs-3"><strong>Hours: </strong> {{ task_detail.task_hours }}</div>
+            <div class="col-xs-3"><strong>Notes: </strong> {{ task_detail.task_notes }}</div>
+        </div>
+    </div>
+    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+</div>
+
+{% endblock %}

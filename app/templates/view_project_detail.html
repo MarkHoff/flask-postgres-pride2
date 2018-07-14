@@ -46,17 +46,62 @@
         <div class="row"><div class="col-md-12">&nbsp;</div></div>
         <div class="row">
             <div class="col-md-12">
-                <div class="col-xs-12"><strong>Notes: </strong> {{ project_detail.notes }}</div>
+                <div class="col-xs-3"><strong>User Story ID: </strong> {{ us_detail.user_story_id }}</div>
+                <div class="col-xs-3"><strong>User Story Name: </strong> {{ us_detail.user_story_name }}</div>
+                <div class="col-xs-3"><strong>User Story Desc: </strong> {{ us_detail.user_story_desc }}</div>
+            </div>
+        </div>
+        <div class="row"><div class="col-md-12">&nbsp;</div></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-xs-6"><strong>Notes: </strong> {{ project_detail.notes }}</div>
                 <div class="row"><div class="col-md-12">&nbsp;</div></div>
             </div>
         </div>
     </div>
+                <h3>User Stories</h3>
     <div class="row"><div class="col-md-12">&nbsp;</div></div>
     <div class="container" style="border:1px solid #cecece;">
-        <div class="row">
-            <div class="col-md-12">
-                <h3>Objects</h3>
-                <div class="row"><div class="col-md-12">&nbsp;</div></div>
+        <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                {% for story in us_detail %}
+                        {% if story.user_story != None %}
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="col-xs-4"><strong>ID: </strong> <a href="{{ url_for('story_detail', id=story.id) }}">{{ story.user_story_id }}</a></div>
+                        <div class="col-xs-4"><strong>Name: </strong> {{ story.user_story_name }}</div>
+                        <div class="col-xs-3"><strong>Sprint: </strong> {{ story.sprint }}</div>
+                    &nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">&nbsp;
+                        <div class="col-xs-4"><strong>Size: </strong> {{ story.size }}</div>
+                        <div class="col-xs-4"><strong>Points: </strong> {{ story.points }}</div>
+                        <div class="col-xs-3"><strong>Epic: </strong> {{ story.epic }}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">&nbsp;
+                        <div class="col-xs-6"><strong>Description: </strong> {{ story.user_story_desc }}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">&nbsp;
+                        <div class="col-xs-6"><strong>Notes: </strong> {{ story.story_notes }}</div>
+                </div>
+            </div>
+                    {% else %}
+                        <div class="col-xs-6"><strong>No stories exist for this project</strong></div>
+                    {% endif %}
+                        <hr>
+                {% endfor %}
+            <div class="row"><div class="col-md-12">&nbsp;</div></div>
+    </div>
+    <div class="col-md-12">
+        <h3>Objects</h3>
+        <div class="row"><div class="col-md-12">&nbsp;</div></div>
+        <div class="container" style="border:1px solid #cecece;">
+            <div class="row">
+                    <div class="row"><div class="col-md-12">&nbsp;</div></div>
                         {% for obj in object_detail %}
 
                             {% if obj.db_object != None %}
@@ -67,7 +112,7 @@
                             {% endif %}
                         {% endfor %}
             </div>
-            <div class="row"><div class="col-md-12">&nbsp;</div></div>
+                <div class="row"><div class="col-md-12">&nbsp;</div></div>
         </div>
     </div>
 </div>

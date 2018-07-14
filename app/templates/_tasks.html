@@ -1,0 +1,8 @@
+<div class="row" style="display:flex; flex-wrap: wrap">
+    <div class="col-xs-2"><a href="{{ url_for('task_detail', id=task.id) }}">
+        {{ task.task_id }}
+    </a></div>
+    <div class="col-xs-2">{{ task.task_name }}</div>
+    <div class="col-xs-2">{{ task.user_story_id }}</div>
+    <div class="col-xs-2">{{ task.project_id}}</div>
+</div>

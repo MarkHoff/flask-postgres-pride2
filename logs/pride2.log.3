@@ -1,4 +1,4 @@
-2018-04-22 21:20:47,899 ERROR: Exception on /search [POST] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
+2018-07-11 21:19:54,923 ERROR: Exception on /view_tasks [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
 Traceback (most recent call last):
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,8 +12,8 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/mark/PythonFlaskVertica/app/routes.py", line 645, in search
-    return render_template('view_objects.html', title='Search Results', all_objects=obj_list)
+  File "/home/mark/PythonFlaskVertica/app/routes.py", line 411, in view_tasks
+    return render_template('view_tasks.html', title='View Tasks', all_tasks = all_tasks)
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 134, in render_template
     context, ctx.app)
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 116, in _render
@@ -26,7 +26,7 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
-  File "/home/mark/PythonFlaskVertica/app/templates/view_objects.html", line 1, in top-level template code
+  File "/home/mark/PythonFlaskVertica/app/templates/view_tasks.html", line 1, in top-level template code
     {% extends "base.html" %}
   File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 1, in top-level template code
     {% extends 'bootstrap/base.html' %}
@@ -36,71 +36,14 @@ Traceback (most recent call last):
     {%- block html %}
   File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block "html"
     {% block body -%}
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 21, in block "body"
-    {% block navbar %}
-  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 29, in block "navbar"
-    <li><a href="{{ url_for('proj_uploader') }}">Upload Project File</a></li>
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/helpers.py", line 333, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1805, in handle_url_build_error
-    reraise(exc_type, exc_value, tb)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
-    raise value
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/helpers.py", line 323, in url_for
-    force_external=external)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/werkzeug/routing.py", line 1776, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'proj_uploader'. Did you mean 'upload_objfile' instead?
-2018-04-22 21:20:52,694 ERROR: Exception on /search [GET] [in /home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py:1560]
-Traceback (most recent call last):
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1982, in wsgi_app
-    response = self.full_dispatch_request()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1614, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1517, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
-    raise value
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1612, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1598, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/mark/PythonFlaskVertica/app/routes.py", line 647, in search
-    return render_template('search_form.html')
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 134, in render_template
-    context, ctx.app)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/templating.py", line 116, in _render
-    rv = template.render(context)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/asyncsupport.py", line 76, in render
-    return original_render(self, *args, **kwargs)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 1008, in render
-    return self.environment.handle_exception(exc_info, True)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 780, in handle_exception
-    reraise(exc_type, exc_value, tb)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
-    raise value.with_traceback(tb)
-  File "/home/mark/PythonFlaskVertica/app/templates/search_form.html", line 2, in top-level template code
-    {% import 'bootstrap/wtf.html' as wtf %}
-  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 1, in top-level template code
-    {% extends 'bootstrap/base.html' %}
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
-    {% block doc -%}
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block "doc"
-    {%- block html %}
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block "html"
-    {% block body -%}
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 21, in block "body"
-    {% block navbar %}
-  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 29, in block "navbar"
-    <li><a href="{{ url_for('proj_uploader') }}">Upload Project File</a></li>
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/helpers.py", line 333, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/app.py", line 1805, in handle_url_build_error
-    reraise(exc_type, exc_value, tb)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/_compat.py", line 33, in reraise
-    raise value
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask/helpers.py", line 323, in url_for
-    force_external=external)
-  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/werkzeug/routing.py", line 1776, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'proj_uploader'. Did you mean 'upload_objfile' instead?
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 23, in block "body"
+    {% block content -%}
+  File "/home/mark/PythonFlaskVertica/app/templates/base.html", line 54, in block "content"
+    {% block app_content %}{% endblock %}
+  File "/home/mark/PythonFlaskVertica/app/templates/view_tasks.html", line 11, in block "app_content"
+    {% include '_stories.html' %}
+  File "/home/mark/PythonFlaskVertica/app/templates/_stories.html", line 2, in top-level template code
+    <div class="col-xs-2"><a href="{{ url_for('story_detail', id=story.id) }}">
+  File "/home/mark/anaconda3/envs/flask/lib/python3.6/site-packages/jinja2/environment.py", line 430, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'story' is undefined
