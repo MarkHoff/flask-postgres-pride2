@@ -63,5 +63,24 @@
     </div>
     <div class="row"><div class="col-md-12">&nbsp;</div></div>
 </div>
-
+                <h3>Tasks</h3>
+    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+    <div class="container" style="border:1px solid #cecece;">
+    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+            {% for task in task_detail %}
+                    {% if task.task != None %}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="col-xs-4"><strong>ID: </strong> <a href="{{ url_for('task_detail', id=task.t_id) }}">{{ task.task_id }}</a></div>
+                    <div class="col-xs-4"><strong>Name: </strong> {{ task.task_name }}</div>
+                &nbsp;</div>
+        </div>
+                {% else %}
+                    <div class="col-xs-6"><strong>No stories exist for this project</strong></div>
+                {% endif %}
+                    <hr>
+            {% endfor %}
+    <div class="row"><div class="col-md-12">&nbsp;</div></div>
+    </div>
+</div>
 {% endblock %}

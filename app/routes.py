@@ -400,9 +400,18 @@ def story_detail(id):
         UserStory.size,
         UserStory.points,
         UserStory.epic,
-        UserStory.story_notes
+        UserStory.story_notes,
     ).first_or_404()
-    return render_template('view_story_detail.html',title='User Story Detail', story_detail=story_detail)
+    task_detail = db.session.query(Task).outerjoin(UserStory, UserStory.user_story_id == Task.user_story_id).filter(
+        UserStory.id == id). \
+        add_columns(
+        Task.id.label('t_id'),
+        Task.task_id,
+        Task.task_name
+    )
+    return render_template('view_story_detail.html',title='User Story Detail',
+                           story_detail=story_detail,
+                           task_detail=task_detail)
 
 
 @app.route('/view_tasks', methods = ['GET'])
@@ -467,9 +476,10 @@ def task_detail(id):
         add_columns(
         Project.pid,
         Project.project_name,
-        UserStory.id,
+        UserStory.id.label("us_id"),
         UserStory.user_story_id,
         UserStory.user_story_name,
+        Task.id,
         Task.task_id,
         Task.task_name,
         Task.dev_lead,
@@ -524,7 +534,7 @@ def search():
             print(proj_list)
             if download == 'csv':
                 csv_list = [['PID', 'PROJECT NAME', 'PMT', 'DEV LEAD', 'DEVELOPERS', 'RELEASE']]
-                filename = '/home/mark/PythonFlaskVertica/app/all_projects.csv'
+                filename = 'all_projects.csv'
                 for row in proj_list:
                     csv_list.append([row.pid, row.project_name, row.pmt, row.dev_lead, row.developers, row.release])
                 csv_list = np.asarray(csv_list)
@@ -810,20 +820,22 @@ def search():
                              'DATA TYPE', 'SCHEMA', 'FREQUENCY', 'DATA PROVIDER', 'PROVIDING SYSTEM',
                              'INTERFACE', 'TOPIC', 'DATA RETENTION', 'LATENCY', 'DATA IN QA0', 'ROW COUNT PER PERIOD',
                              'ACTIVE IN PROD', 'ORDER BY ', 'SEGMENT BY']]
-                filename = '/home/mark/PythonFlaskVertica/app/all_objects.csv'
-                for row in obj_list:
-                    csv_list.append([row.db_object_project_id, row.db_object_project_name, row.db_object_dev_lead, row.db_object_pmt, row.db_object_developers,
-                                     row.db_object_release,
-                                     row.db_object_dm_seq, row.db_object_data_type, row.db_object_schema, row.db_object_frequency,
-                                     row.db_object_data_provider,
-                                     row.db_object_providing_system, row.db_object_interface, row.db_object_topic,
-                                     row.db_object_data_retention, row.db_object_latency,
-                                     row.db_object_data_in_qa0, row.db_object_row_count_per_period, row.db_object_active_in_prod,
-                                     row.db_object_order_by, row.db_object_segment_by ])
+                filename = 'all_objects.csv'
+                # for row in obj_list:
+                    # csv_list.append([row.db_object_project_name, row.db_object_dev_lead, row.db_object_pmt, row.db_object_developers,
+                    #                  row.db_object_release,
+                    #                  row.db_object_dm_seq, row.db_object_data_type, row.db_object_schema, row.db_object_frequency,
+                    #                  row.db_object_data_provider,
+                    #                  row.db_object_providing_system, row.db_object_interface, row.db_object_topic,
+                    #                  row.db_object_data_retention, row.db_object_latency,
+                    #                  row.db_object_data_in_qa0, row.db_object_row_count_per_period, row.db_object_active_in_prod,
+                    #                  row.db_object_order_by, row.db_object_segment_by ])
+                    # csv_list.append([row.pid, row.project_name, row.dev_lead, row.pmt, row.developers, row.release])
                 csv_list = np.asarray(csv_list)
                 csvList = pd.DataFrame(csv_list)
                 csvList.to_csv(filename, header=False, sep='\t', index=False)
                 return send_file(filename, as_attachment=True, mimetype='text/csv')
+                    # print(row)
             else:
                 return render_template('view_objects.html', title='Search Results', all_objects=obj_list)
     else:

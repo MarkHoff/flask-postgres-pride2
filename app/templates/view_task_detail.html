@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-md-12">
             <h3>Details for {{ task_detail.task_id }} - {{ task_detail.task_name }} </h3>
-            <h3>User Story ID: {{ task_detail.user_story_id }} </h3>
+            <h3>User Story ID:<a href="{{ url_for('story_detail', id=task_detail.us_id) }}">{{ task_detail.user_story_id }}</a> </h3>
             <h3>User Story Name: {{ task_detail.user_story_name }}</h3>
             <div class="row"><div class="col-md-12">&nbsp;</div></div>
         </div>
