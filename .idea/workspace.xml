@@ -2,23 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4fb2cb71-c8a6-4cae-bda4-3995e397e06e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/all_projects.csv" afterPath="$PROJECT_DIR$/app/all_projects.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes.py" afterPath="$PROJECT_DIR$/app/routes.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/_stories.html" afterPath="$PROJECT_DIR$/app/templates/_stories.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/view_story_detail.html" afterPath="$PROJECT_DIR$/app/templates/view_story_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/templates/view_task_detail.html" afterPath="$PROJECT_DIR$/app/templates/view_task_detail.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db.dump20180721" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.py" afterPath="$PROJECT_DIR$/config.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log" afterPath="$PROJECT_DIR$/logs/pride2.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log.1" afterPath="$PROJECT_DIR$/logs/pride2.log.1" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log.10" afterPath="$PROJECT_DIR$/logs/pride2.log.10" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log.2" afterPath="$PROJECT_DIR$/logs/pride2.log.2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log.3" afterPath="$PROJECT_DIR$/logs/pride2.log.3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log.4" afterPath="$PROJECT_DIR$/logs/pride2.log.4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log.5" afterPath="$PROJECT_DIR$/logs/pride2.log.5" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log.6" afterPath="$PROJECT_DIR$/logs/pride2.log.6" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log.7" afterPath="$PROJECT_DIR$/logs/pride2.log.7" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log.8" afterPath="$PROJECT_DIR$/logs/pride2.log.8" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/logs/pride2.log.9" afterPath="$PROJECT_DIR$/logs/pride2.log.9" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -79,16 +65,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="187">
               <caret line="11" column="10" lean-forward="true" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Procfile" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Procfile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="21" lean-forward="false" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -513,14 +489,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="52" column="8" lean-forward="false" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/email.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -741,6 +709,14 @@
           <folding>
             <element signature="n#style#0;n#div#3;n#div#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="884">
+          <caret line="52" column="8" lean-forward="false" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
