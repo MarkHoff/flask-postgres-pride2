@@ -44,7 +44,7 @@ s3transfer==0.1.13
 six==1.11.0
 SQLAlchemy==1.2.4
 texttable==1.2.1
-urllib3==1.22
+urllib3==1.26.5
 virtualenv==15.1.0
 virtualenv-clone==0.3.0
 visitor==0.1.3
